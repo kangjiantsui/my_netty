@@ -26,6 +26,5 @@ public class Utils {
         System.out.println("                      " + Utils.formatDateTime(msg.getSentTime()) + "                     ");
         System.out.println(msg.getUsername() + ": " + msg.getMsg());
         System.out.println("=================================================================================================");
-
     }
 }
