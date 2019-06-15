@@ -1,4 +1,4 @@
-package cn.kang.chatroom;
+package cn.kang.chatroom.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

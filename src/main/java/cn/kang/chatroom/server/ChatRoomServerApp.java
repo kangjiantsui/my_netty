@@ -1,7 +1,5 @@
-package cn.kang.chatroom;
+package cn.kang.chatroom.server;
 
-import cn.kang.chatroom.handler.ServerMsgHandler;
-import cn.kang.chatroom.handler.ServerTransferMsgHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;

@@ -1,7 +1,7 @@
-package cn.kang.chatroom.handler;
+package cn.kang.chatroom.client;
 
-import cn.kang.chatroom.Message;
-import cn.kang.chatroom.Utils;
+import cn.kang.chatroom.common.Message;
+import cn.kang.chatroom.common.Utils;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
