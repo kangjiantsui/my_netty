@@ -1,4 +1,4 @@
-package cn.kang.timeClient;
+package cn.kang.netty.timeClient;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

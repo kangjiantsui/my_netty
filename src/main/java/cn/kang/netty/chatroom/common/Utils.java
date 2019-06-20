@@ -1,4 +1,4 @@
-package cn.kang.chatroom.common;
+package cn.kang.netty.chatroom.common;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

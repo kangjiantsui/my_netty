@@ -1,4 +1,4 @@
-package cn.kang.timeServer;
+package cn.kang.netty.timeServer;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFuture;

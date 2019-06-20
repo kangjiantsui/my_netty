@@ -1,4 +1,4 @@
-package cn.kang.printServerApp;
+package cn.kang.netty.printServerApp;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

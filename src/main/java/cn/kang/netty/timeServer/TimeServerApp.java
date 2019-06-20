@@ -1,6 +1,6 @@
-package cn.kang.timeServer;
+package cn.kang.netty.timeServer;
 
-import cn.kang.printServerApp.EchoServerApp;
+import cn.kang.netty.printServerApp.EchoServerApp;
 
 public class TimeServerApp extends EchoServerApp {
 

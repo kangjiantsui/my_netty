@@ -1,4 +1,4 @@
-package cn.kang.chatroom.common;
+package cn.kang.netty.chatroom.common;
 
 public class Constants {
     public static final String SERVER = "Chatroom server";

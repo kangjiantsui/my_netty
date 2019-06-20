@@ -1,6 +1,6 @@
-package cn.kang.printServerApp;
+package cn.kang.netty.printServerApp;
 
-import cn.kang.timeServer.TimeServerHandler;
+import cn.kang.netty.timeServer.TimeServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
