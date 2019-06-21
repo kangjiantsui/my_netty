@@ -259,6 +259,11 @@ public class Demo1 {
         serviceManager.startAsync();
         serviceManager.stopAsync();
     }
+
+    @Test
+    public void demo21() {
+
+    }
 }
 
 class DemoServcie extends AbstractIdleService {
