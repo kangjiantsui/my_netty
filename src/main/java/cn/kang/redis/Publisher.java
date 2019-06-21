@@ -16,7 +16,7 @@ import java.io.InputStreamReader;
 @Component
 public class Publisher extends Thread {
     @Autowired
-    private final JedisPool jedisPool;
+    private  JedisPool jedisPool;
 
     public Publisher(JedisPool jedisPool) {
         this.jedisPool = jedisPool;

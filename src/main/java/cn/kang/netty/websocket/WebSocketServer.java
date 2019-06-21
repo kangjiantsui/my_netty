@@ -11,6 +11,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.stream.ChunkedWriteHandler;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,14 +21,9 @@ public class WebSocketServer {
     private ServerBootstrap b;
     private Channel ch;
 
-    public static class SingletonWssServer{
-        static final WebSocketServer instance = new WebSocketServer();
-    }
 
-    public static WebSocketServer getInstance() {
-        return SingletonWssServer.instance;
-    }
 
+    @Async
     public void run(int port) throws Exception {
        bossGroup = new NioEventLoopGroup();
        workGroup = new NioEventLoopGroup();
