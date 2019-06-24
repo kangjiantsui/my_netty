@@ -262,7 +262,40 @@ public class Demo1 {
 
     @Test
     public void demo21() {
+        System.out.println(new Son().getSuperName());
+    }
 
+    @Test
+    public void demo22() {
+        System.out.println(new Demo1().getClass().getSimpleName());
+        System.out.println(new Demo1().getClass().getName());
+    }
+
+    @Test
+    public void demo23() {
+//        List<Parent> list = new ArrayList<Son>();
+        List<? extends Parent> list1 = new ArrayList<Son>();
+    }
+}
+
+class Parent {
+    private String name = "爸爸";
+
+    public String getName() {
+        return name;
+    }
+}
+
+class Son extends Parent {
+    private String name = "儿子";
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    public String getSuperName() {
+        return super.getName();
     }
 }
 

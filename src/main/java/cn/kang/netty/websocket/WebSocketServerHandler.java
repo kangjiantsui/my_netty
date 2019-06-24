@@ -2,15 +2,14 @@ package cn.kang.netty.websocket;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.*;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpUtil;
 import io.netty.handler.codec.http.websocketx.*;
+import io.netty.util.Attribute;
+import io.netty.util.AttributeKey;
 import io.netty.util.CharsetUtil;
 
 import java.util.logging.Level;
@@ -34,15 +33,13 @@ import static io.netty.handler.codec.rtsp.RtspResponseStatuses.BAD_REQUEST;
  * 版权声明：本文为博主原创文章，转载请附上博文链接！
  */
 public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> {
-    private static final Logger logger = Logger
-            .getLogger(WebSocketServerHandler.class.getName());
+    private static final Logger logger = Logger.getLogger(WebSocketServerHandler.class.getName());
 
     private WebSocketServerHandshaker handshaker;
 
 
     @Override
-    public void channelRead0(ChannelHandlerContext ctx, Object msg)
-            throws Exception {
+    public void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
         // 传统的HTTP接入
         if (msg instanceof FullHttpRequest) {
             handleHttpRequest(ctx, (FullHttpRequest) msg);
@@ -62,14 +59,12 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
 
         // 如果HTTP解码失败，返回HHTP异常
         if (!req.decoderResult().isSuccess() || (!"websocket".equals(req.headers().get("Upgrade")))) {
-            sendHttpResponse(ctx, req, new DefaultFullHttpResponse(HTTP_1_1,
-                    BAD_REQUEST));
+            sendHttpResponse(ctx, req, new DefaultFullHttpResponse(HTTP_1_1, BAD_REQUEST));
             return;
         }
 
         // 构造握手响应返回，本机测试
-        WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory(
-                "ws://localhost:8080/websocket", null, false);
+        WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory("ws://localhost:8080/websocket", null, false);
         handshaker = wsFactory.newHandshaker(req);
         if (handshaker == null) {
             WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(ctx.channel());
@@ -109,8 +104,7 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
     private static void sendHttpResponse(ChannelHandlerContext ctx, FullHttpRequest req, FullHttpResponse res) {
         // 返回应答给客户端
         if (res.getStatus().code() != 200) {
-            ByteBuf buf = Unpooled.copiedBuffer(res.getStatus().toString(),
-                    CharsetUtil.UTF_8);
+            ByteBuf buf = Unpooled.copiedBuffer(res.getStatus().toString(), CharsetUtil.UTF_8);
             res.content().writeBytes(buf);
             buf.release();
             HttpUtil.setContentLength(res, res.content().readableBytes());

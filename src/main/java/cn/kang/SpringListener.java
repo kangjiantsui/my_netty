@@ -1,6 +1,7 @@
-package cn.kang.netty.websocket;
+package cn.kang;
 
 import cn.kang.Task;
+import cn.kang.netty.websocket.WebSocketServer;
 import cn.kang.redis.PubSubDemo;
 import cn.kang.redis.Publisher;
 import cn.kang.redis.SubThread;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisPool;
 
 @Component
-public class NettybootServerInitConfig implements ApplicationListener<ContextRefreshedEvent> {
+public class SpringListener implements ApplicationListener<ContextRefreshedEvent> {
     @Autowired
     private JedisPool jedisPool;
     @Autowired
@@ -29,10 +30,9 @@ public class NettybootServerInitConfig implements ApplicationListener<ContextRef
     public void onApplicationEvent(ContextRefreshedEvent event) {
         if (event.getApplicationContext().getParent() == null) {//以免onApplicationEvent方法执行两次,root application context没有parent
             try {
-                SubThread subThread = new SubThread(jedisPool);     //订阅者
                 subThread.start();
-                webSocketServer.run(7891);
                 publisher.start();
+                webSocketServer.run(8080);
             } catch (Exception e) {
                 e.printStackTrace();
             }

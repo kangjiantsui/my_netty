@@ -11,7 +11,6 @@ public class Subscriber extends JedisPubSub {
     @Override
     public void onSubscribe(String channel, int subscribedChannels) {       //订阅了频道会调用
         System.out.println(String.format("subscribe redis channel success,channel %s,subscribeChannels %d", channel, subscribedChannels));
-
     }
 
     @Override
