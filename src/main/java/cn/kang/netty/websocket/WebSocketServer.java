@@ -22,11 +22,10 @@ public class WebSocketServer {
     private Channel ch;
 
 
-
     @Async
     public void run(int port) throws Exception {
-       bossGroup = new NioEventLoopGroup();
-       workGroup = new NioEventLoopGroup();
+        bossGroup = new NioEventLoopGroup();
+        workGroup = new NioEventLoopGroup();
         try {
             b = new ServerBootstrap();
             b.group(bossGroup, workGroup)
@@ -34,25 +33,18 @@ public class WebSocketServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
 
                         @Override
-                        protected void initChannel(SocketChannel ch)
-                                throws Exception {
+                        protected void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline pipeline = ch.pipeline();
-                            pipeline.addLast("http-codec",
-                                    new HttpServerCodec());
-                            pipeline.addLast("aggregator",
-                                    new HttpObjectAggregator(65536));
-                            pipeline.addLast("http-chunked",
-                                    new ChunkedWriteHandler());
-                            pipeline.addLast("handler",
-                                    new WebSocketServerHandler());
+                            pipeline.addLast("http-codec", new HttpServerCodec());
+                            pipeline.addLast("aggregator", new HttpObjectAggregator(65536));
+                            pipeline.addLast("http-chunked", new ChunkedWriteHandler());
+                            pipeline.addLast("handler", new WebSocketServerHandler());
                         }
                     });
 
             ch = b.bind(port).sync().channel();
-            System.out.println("Web socket server started at port " + port
-                    + '.');
-            System.out.println("Open your browser and navigate to http://localhost:"
-                            + port + '/');
+            System.out.println("Web socket server started at port " + port + '.');
+            System.out.println("Open your browser and navigate to http://localhost:" + port + '/');
 
             ch.closeFuture().sync();
         } finally {
@@ -72,7 +64,6 @@ public class WebSocketServer {
         }
         new WebSocketServer().run(port);
     }
-
 
 
 }

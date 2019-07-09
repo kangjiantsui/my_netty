@@ -1,5 +1,6 @@
 package cn.kang.my_netty;
 
+import cn.kang.utils.IniReader;
 import com.google.common.util.concurrent.AbstractIdleService;
 import com.google.common.util.concurrent.Service;
 import com.google.common.util.concurrent.ServiceManager;
@@ -7,11 +8,24 @@ import io.netty.channel.EventLoopGroup;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Before;
 import org.junit.Test;
+import redis.clients.jedis.Jedis;
 
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 public class Demo1 {
+    private Jedis jedis;
+
+    @Before
+    public void init() {
+        jedis = new Jedis("114.116.175.209", 6379);
+    }
+
     @Test
     public void demo1() {
         System.out.println(1 / 100);
@@ -260,10 +274,6 @@ public class Demo1 {
         serviceManager.stopAsync();
     }
 
-    @Test
-    public void demo21() {
-        System.out.println(new Son().getSuperName());
-    }
 
     @Test
     public void demo22() {
@@ -276,7 +286,193 @@ public class Demo1 {
 //        List<Parent> list = new ArrayList<Son>();
         List<? extends Parent> list1 = new ArrayList<Son>();
     }
+
+    @Test
+    public void demo24() {
+        int a = 1;
+        int b = 2;
+
+    }
+
+    @Test
+    public void demo25() {
+        System.out.println(1 << 1);
+    }
+
+    @Test
+    public void demo26() throws JSONException {
+        JSONObject put = new JSONObject().put(String.valueOf(1), 2);
+        System.out.println(put);
+    }
+
+    @Test
+    public void demo27() throws ParseException {
+        String s = new String("2019.6.25.0.0-2019.6.26.0.0");
+        System.out.println(s);
+        String[] split = s.split("-");
+        for (String str : split) {
+            System.out.println(str);
+            ParsePosition pos = new ParsePosition(0);
+            Date parse = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").parse(str, pos);
+            System.out.println(parse);
+        }
+    }
+
+    @Test
+    public void demo28() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("1", 1);
+        System.out.println(jsonObject);
+        jsonObject.put("1", 3);
+        System.out.println(jsonObject);
+    }
+
+    @Test
+    public void demo29() throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String format = sdf.format(new Date());
+        System.out.println(sdf.format(new Date()));
+        Date parse = sdf.parse(format);
+        System.out.println(parse);
+        long time = parse.getTime();
+        System.out.println(time);
+    }
+
+    @Test
+    public void demo30() {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(7051, 3);
+        map.put(1, 1);
+        map.put(51, 5);
+        map.put(6, 678);
+        map.put(32, 656);
+        map.put(64, 168);
+        System.out.println(map);
+        ArrayList<Map.Entry<Integer, Integer>> list = new ArrayList<>(map.entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<Integer, Integer>>() {
+            @Override
+            public int compare(Map.Entry<Integer, Integer> o1, Map.Entry<Integer, Integer> o2) {
+                return o1.getValue().compareTo(o2.getValue());
+            }
+        });
+        System.out.println(list);
+    }
+
+    @Test
+    public void demo31() {
+        Parent p1 = new Parent("你好");
+        Parent p2 = new Parent("woyehao");
+        System.out.println(p1 == p2);
+        ArrayList<Parent> parents = new ArrayList<>();
+        parents.add(p1);
+        parents.add(p2);
+        System.out.println(parents);
+        ;
+        parents.forEach(e -> {
+            if ("你好".equals(e.getName())) {
+                e.setName("我好");
+            }
+        });
+        System.out.println(parents);
+    }
+
+    @Test
+    public void demo32() {
+        LocalDate today = LocalDate.now();
+        System.out.println(today);
+        String s = today.toString();
+    }
+
+    @Test
+    public void demo33() {
+        Jedis jedis = new Jedis("114.116.175.209", 6379);
+        jedis.set("1", "2");
+    }
+
+    @Test
+    public void demo34() {
+        String s = jedis.get("3");
+        System.out.println(s);
+    }
+
+    @Test
+    public void demo35() {
+        IniReader iniReader = new IniReader("D:\\workSpace\\pokemon\\svn_local_repositorywc\\NOXGameServer\\config\\config.ini");
+        String redis = iniReader.getIniKey("[redis]");
+        System.out.println(redis);
+    }
+
+    @Test
+    public void demo36() {
+        System.out.println(109 / 100);
+    }
+
+    @Test
+    public void demo37() {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 30; i < 50; i++) {
+            map.put(i, new Random().nextInt(100));
+        }
+        Set<Integer> set = map.keySet();
+        System.out.println(set);
+        Integer min = Collections.min(set);
+        System.out.println(min);
+    }
+
+    @Test
+    public void demo38() {
+        Parent parent = new Parent("233");
+        System.out.println(parent);
+        parent.setName("333");
+    }
+
+    @Test
+    public void demo39() {
+        int[] array = {1, 2, 3, 5, 8, 13, 21, 34};
+        int a = 1;
+        int b = 2;
+        int temp = 0;
+        for (int i = 0; i < 100; i++) {
+            temp = a + b;
+            a = b;
+            b = temp;
+        }
+    }
+
+    @Test
+    public void demo40() {
+        int[] array = new int[20];
+        for (int arr : array) {
+            arr = new Random().nextInt(20);
+        }
+    }
+
+    @Test
+    public void demo41() {
+        long time = 604800000 / (1000 * 60 * 60 * 24);
+        System.out.println(time);
+    }
+
+    @Test
+    public void demo42() {
+        for (int i = 15; i <= 19; i++) {
+            System.out.println(i);
+        }
+    }
+
+    @Test
+    public void demo43() {
+        new Dog().wangWang();
+        Dog.wangWang();
+    }
+
+    private static class Dog{
+        public static void wangWang() {
+            System.out.println("旺旺");
+        }
+    }
 }
+
 
 class Parent {
     private String name = "爸爸";
@@ -284,10 +480,29 @@ class Parent {
     public String getName() {
         return name;
     }
+
+    public Parent(String name) {
+        this.name = name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Parent{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
 
 class Son extends Parent {
     private String name = "儿子";
+
+    public Son(String name) {
+        super(name);
+    }
 
     @Override
     public String getName() {
