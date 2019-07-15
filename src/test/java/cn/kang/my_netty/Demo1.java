@@ -4,19 +4,31 @@ import cn.kang.utils.IniReader;
 import com.google.common.util.concurrent.AbstractIdleService;
 import com.google.common.util.concurrent.Service;
 import com.google.common.util.concurrent.ServiceManager;
-import io.netty.channel.EventLoopGroup;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+import static java.math.BigDecimal.*;
 
 public class Demo1 {
     private Jedis jedis;
@@ -259,7 +271,12 @@ public class Demo1 {
     }
 
     public void add(int i) {
+        System.out.println("5");
         i = 5;
+    }
+
+    public void add() {
+
     }
 
     public void append(StringBuilder stringBuilder) {
@@ -466,9 +483,262 @@ public class Demo1 {
         Dog.wangWang();
     }
 
-    private static class Dog{
+    @Test
+    public void dmoe44() {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(1, 10110);
+        map.put(2, 10201);
+        map.put(3, 0);
+        ArrayList<Map.Entry<Integer, Integer>> entries = new ArrayList<>(map.entrySet());
+        entries.forEach(e -> {
+            System.out.println(e.getValue());
+        });
+    }
+
+    @Test
+    public void demo45() {
+        Parent parent = new Parent("爸爸");
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(1, 2);
+        map.put(2, 3);
+        map.put(3, 4);
+        map.put(4, 0);
+        parent.setWifes(map);
+        ArrayList<Map.Entry<Integer, Integer>> list = new ArrayList<>(parent.getWifes().entrySet());
+        list.stream()
+                .sorted((a, b) -> b.getValue().compareTo(a.getValue()))
+                .forEach(System.out::println);
+    }
+
+    @Test
+    public void demo46() {
+        Parent parent = new Parent("爸爸");
+        //parent.setWifes(new HashMap<>());
+        Set<Map.Entry<Integer, Integer>> 爸爸 = parent.getWifes().entrySet();
+    }
+
+    @Test
+    public void demo47() {
+        List<String> array = Arrays.asList("a", "b", "c", "d");
+        array.forEach(this::function1);
+    }
+
+    @Test
+    public void demo48() {
+        int count = 0;
+        Map<Integer, Integer> map = Material.getMap();
+        map.values()
+                .stream()
+                .sorted((a, b) -> Integer.compare(b, a))
+                .forEach(System.out::println);
+    }
+
+    @Test
+    public void demo50() {
+        int sum = sum(1, 2, 3, 4);
+        System.out.println(sum);
+    }
+
+    public int sum(Integer... integers) {
+        return Arrays.stream(integers).reduce(Integer::sum).orElse(0);
+    }
+
+    @Test
+    public void demo49() {
+        Map<Integer, Integer> map = Material.getMap();
+    }
+
+    @Test
+    public void demo51() {
+        function1("哈哈1", this::print);
+    }
+
+    public void print(String str) {
+        System.out.println("print value:" + str);
+    }
+
+    public void function1(String str, Consumer<String> callBack) {
+        System.out.println("function1 执行");
+        System.out.println(str);
+    }
+
+    public static class Tickers {
+        public static final List<String> symbols = Arrays.asList(
+                "AMD", "HPQ", "IBM", "TXN", "VMW", "XRX", "AAPL", "ADBE",
+                "AMZN", "CRAY", "CSCO", "DELL", "GOOG", "INTC", "INTU",
+                "MSFT", "ORCL", "TIBX", "VRSN", "YHOO");
+    }
+
+    public static class YahooFinance {
+        public static BigDecimal getPrice(final String ticker) {
+            try {
+                final URL url = new URL("http://ichart.finance.yahoo.com/table.csv?s=" + ticker);
+                final BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+                final String data = reader.lines().skip(1).findFirst().get();
+                final String[] dataItems = data.split(",");
+                return new BigDecimal(dataItems[dataItems.length - 1]);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+
+
+    public void function1(String str) {
+        System.out.println("print value:" + str);
+    }
+
+    private static class Material {
+        public static Map<Integer, Integer> getMap() {
+            HashMap<Integer, Integer> map = new HashMap<>();
+            map.put(1, 2);
+            map.put(2, 4);
+            map.put(3, 3);
+            map.put(4, 0);
+            return map;
+        }
+    }
+
+    private static class Dog {
         public static void wangWang() {
             System.out.println("旺旺");
+        }
+    }
+
+    @Test
+    public void demo52() throws CloneNotSupportedException {
+    }
+
+    @Test
+    public void demo53() {
+        IntStream.rangeClosed(1, 10).forEach(System.out::println);
+    }
+
+    @Test
+    public void demo54() {
+        Consumer<Integer> c = System.out::print;
+        c.accept(5464);
+    }
+
+    @Test
+    public void demo55() {
+        double sum = 100 * 0.25 + 92 * 0.75;
+        System.out.println(sum);
+    }
+
+    @Test
+    public void demo56() {
+        Function<Integer, Integer> f = s -> ++s;
+        Integer apply = f.apply(1);
+        System.out.println(apply);
+    }
+
+    @Test
+    public void demo57() {
+        Stream.generate(Math::random).limit(10).forEach(System.out::println);
+    }
+
+    @Test
+    public void demo58() {
+        Stream.iterate(0, n -> ++n).limit(10).forEach(System.out::println);
+    }
+
+    @Test
+    public void demo59() {
+        Function<Integer, Integer> f = e -> ++e;
+        Function<Integer, Integer> g = e -> e * 2;
+        System.out.println(f.compose(g).apply(1));
+    }
+
+    @Test
+    public void demo60() {
+        Predicate<Integer> p = e -> e == 0;
+        System.out.println("你好");
+    }
+
+    @Test
+    public void demo61() {
+        Function<Double, Double> f = e -> e = valueOf(e).add(valueOf(0.05)).doubleValue();
+        Function<Double, Double> g = e -> e = e * (1 - e);
+        double v = DoubleStream
+                .iterate(0.3, f::apply)
+                .limit(10)
+                .reduce((a, b) -> (1 - a) * (1 - b))
+                .orElse(0);
+        System.out.println(v);
+        double d = 0.3;
+        double e = 0.7;
+        double o = 0;
+        for (int i = 0; i < 10; i++) {
+            o = valueOf(1).subtract(valueOf(f.apply(d))).doubleValue();
+            System.out.print("e=" + e + "    o=" + o + "    e*o=");
+            e = valueOf(e).multiply(valueOf(o)).doubleValue();
+            System.out.println(valueOf(e).toPlainString());
+            d = f.apply(d);
+        }
+
+    }
+
+    @Test
+    public void demo62() {
+        for (int j = 0; j < 100; j++) {
+            int count = 0;
+            int a = 0;
+            int d = 0;
+            while (true) {
+                boolean flag = false;
+                a = 30;
+                for (int i = 0; i < 10; i++) {
+                    d = new Random().nextInt(100);
+                    if (d <= a) {
+                        flag = true;
+                        break;
+                    } else {
+                        a += 5;
+                    }
+                }
+                count++;
+                if (!flag) {
+                    break;
+                }
+            }
+            System.out.println(count);
+            System.out.println("a="+a+"\t"+"d="+d);
+        }
+    }
+
+    @Test
+    public void demo63() {
+        System.out.println(new Random().nextInt(100));
+    }
+
+    public static class Person implements Cloneable {
+
+        private String name;
+
+        public void say() {
+            System.out.println("我叫" + name);
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Person() {
+
+        }
+
+        public Person(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public Person clone() throws CloneNotSupportedException {
+            return (Person) super.clone();
         }
     }
 }
@@ -476,6 +746,16 @@ public class Demo1 {
 
 class Parent {
     private String name = "爸爸";
+
+    private HashMap<Integer, Integer> wifes = new HashMap<Integer, Integer>();
+
+    public HashMap<Integer, Integer> getWifes() {
+        return wifes;
+    }
+
+    public void setWifes(HashMap<Integer, Integer> wifes) {
+        this.wifes = wifes;
+    }
 
     public String getName() {
         return name;
