@@ -658,25 +658,17 @@ public class Demo1 {
 
     @Test
     public void demo61() {
+        double a = 0.3;
+        double b = 0.7;
+        double c;
         Function<Double, Double> f = e -> e = valueOf(e).add(valueOf(0.05)).doubleValue();
-        Function<Double, Double> g = e -> e = e * (1 - e);
-        double v = DoubleStream
-                .iterate(0.3, f::apply)
-                .limit(10)
-                .reduce((a, b) -> (1 - a) * (1 - b))
-                .orElse(0);
-        System.out.println(v);
-        double d = 0.3;
-        double e = 0.7;
-        double o = 0;
         for (int i = 0; i < 10; i++) {
-            o = valueOf(1).subtract(valueOf(f.apply(d))).doubleValue();
-            System.out.print("e=" + e + "    o=" + o + "    e*o=");
-            e = valueOf(e).multiply(valueOf(o)).doubleValue();
-            System.out.println(valueOf(e).toPlainString());
-            d = f.apply(d);
+            c = valueOf(1).subtract(valueOf(f.apply(a))).doubleValue();
+            System.out.print("b=" + b + "    c=" + c + "    b*c=");
+            b = valueOf(b).multiply(valueOf(c)).doubleValue();
+            System.out.println(valueOf(b).toPlainString());
+            a = f.apply(a);
         }
-
     }
 
     @Test
@@ -703,13 +695,47 @@ public class Demo1 {
                 }
             }
             System.out.println(count);
-            System.out.println("a="+a+"\t"+"d="+d);
+            System.out.println("a=" + a + "\t" + "d=" + d);
         }
     }
 
     @Test
     public void demo63() {
         System.out.println(new Random().nextInt(100));
+    }
+
+    @Test
+    public void demo64() {
+        BigDecimal a = valueOf(0);
+        for (int i = 0; i < 1500000; i++) {
+            a=a.add(valueOf(0.000001));
+            System.out.println(a.multiply(a)+"\t\t"+a);
+        }
+    }
+
+    @Test
+    public void demo65() {
+        int[] array = {2, 6, 2, 7};
+        int asInt = IntStream.of(array).max().getAsInt();
+        System.out.println(asInt);
+    }
+
+    @Test
+    public void demo66() {
+        System.out.println(function2());
+    }
+
+    public int function2() {
+        int i = 1;
+        try {
+            return i;
+        } finally {
+            i = 2;
+        }
+    }
+
+    public static class Car{
+        Integer color = 1;
     }
 
     public static class Person implements Cloneable {
