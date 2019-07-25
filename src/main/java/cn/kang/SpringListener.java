@@ -1,6 +1,5 @@
 package cn.kang;
 
-import cn.kang.Task;
 import cn.kang.netty.websocket.WebSocketServer;
 import cn.kang.redis.PubSubDemo;
 import cn.kang.redis.Publisher;

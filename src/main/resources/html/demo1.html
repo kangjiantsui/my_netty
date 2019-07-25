@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Send Websocket</title>
+</head>
+<body>
+<div style="text-align: center">
+    <textarea id="ta"></textarea>
+    <br>
+    <button onclick="send('hello')">点我发送</button>
+</div>
+</body>
+<script type="text/javascript">
+    var socket = new WebSocket("ws://localhost:8080");
+    var ta = document.getElementById("ta");
+    socket.onopen = function (ev) {
+        ta.value = "socket成功开启";
+    };
+    socket.onclose = function (ev) {
+        ta.value = "socket被关闭";
+    };
+
+    function send(message) {
+        if (socket.readyState == WebSocket.OPEN) {
+            socket.send(message);
+        } else {
+            console.log("socket连接未准备好");
+        }
+    }
+
+</script>
+</html>

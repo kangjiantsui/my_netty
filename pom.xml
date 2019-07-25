@@ -13,6 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>my_netty</name>
     <description>Demo project for Spring Boot</description>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>1.8</java.version>
@@ -75,6 +76,11 @@
             <artifactId>spring-web</artifactId>
             <version>5.1.7.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>3.6.1</version>
+        </dependency>
     </dependencies>
 
 	<build>
@@ -82,6 +88,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>cn.kang.Application</mainClass>
+                </configuration>
 			</plugin>
 		</plugins>
 	</build>

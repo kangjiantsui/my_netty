@@ -21,6 +21,7 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -732,6 +733,17 @@ public class Demo1 {
         } finally {
             i = 2;
         }
+    }
+
+    @Test
+    public void demo67() {
+        ConcurrentHashMap<Integer, Integer> map = new ConcurrentHashMap<>();
+        map.put(1, 2);
+        map.put(2, 2);
+        ConcurrentHashMap<Integer, Integer> map1 = new ConcurrentHashMap<>();
+        map1.put(1, 2);
+        map1.put(2, 2);
+        System.out.println(map1.equals(map));
     }
 
     public static class Car{
