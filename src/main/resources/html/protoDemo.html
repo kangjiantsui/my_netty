@@ -5,7 +5,9 @@
     <title>Protobuf</title>
 </head>
 <body>
-
+<div style="text-align: center">
+    <button onclick="send()">点我发送</button>
+</div>
 </body>
 <script type="text/javascript" src="../js/proto/awesome.js"></script>
 <script type="text/javascript">
@@ -14,6 +16,22 @@
     message.setName('老王');
 
     let bytes = message.serializeBinary();
-    console.log(bytes);
+    console.log(message);
+
+    let socket = new WebSocket("ws://localhost:8899/ws");
+    socket.onopen = function () {
+        console.log('socket开启');
+    };
+    socket.onclose = function () {
+        console.log('socket关闭');
+    };
+    function send() {
+        if (socket.readyState === WebSocket.OPEN) {
+            console.log('发送消息');
+            socket.send(message.serializeBinary());
+        }else {
+            console.log('还没开')
+        }
+    }
 </script>
 </html>

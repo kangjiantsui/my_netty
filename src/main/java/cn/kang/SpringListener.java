@@ -1,5 +1,6 @@
 package cn.kang;
 
+import cn.kang.netty.websocket.ProtobufServer;
 import cn.kang.netty.websocket.WebSocketServer;
 import cn.kang.redis.PubSubDemo;
 import cn.kang.redis.Publisher;
@@ -23,8 +24,9 @@ public class SpringListener implements ApplicationListener<ContextRefreshedEvent
     @Autowired
     private Publisher publisher;
     @Autowired
-    private WebSocketServer webSocketServer;
-
+    private WebSocketServer webSocketServer;            //处理text格式ws请求
+    @Autowired
+    private ProtobufServer protobufServer;              //处理proto格式ws请求
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         if (event.getApplicationContext().getParent() == null) {//以免onApplicationEvent方法执行两次,root application context没有parent
@@ -32,6 +34,7 @@ public class SpringListener implements ApplicationListener<ContextRefreshedEvent
                 subThread.start();
                 publisher.start();
                 webSocketServer.run(8080);
+                protobufServer.run(8899);
             } catch (Exception e) {
                 e.printStackTrace();
             }
