@@ -7,9 +7,13 @@
 <body>
 
 </body>
-<script src="../js/proto/sglMsgType.js"></script>
-<script src="../js/proto/protobuf.min.js"></script>
+<script type="text/javascript" src="../js/proto/awesome.js"></script>
 <script type="text/javascript">
+    let message = new proto.Person();
+    message.setId(23);
+    message.setName('老王');
 
+    let bytes = message.serializeBinary();
+    console.log(bytes);
 </script>
 </html>
