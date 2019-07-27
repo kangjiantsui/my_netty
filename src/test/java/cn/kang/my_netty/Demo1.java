@@ -266,6 +266,18 @@ public class Demo1 {
         System.out.println("***********************************");
 
     }
+    @Test
+    public void demoT(){
+        for (int i=0;i<200;i++){
+            boolean b=i==i;
+            System.out.println(b+" "+i);
+        }
+    }
+
+    @Test
+    public void t1(){
+        System.out.println(128==128);
+    }
 
     public void add(String s) {
         s = s + "4";

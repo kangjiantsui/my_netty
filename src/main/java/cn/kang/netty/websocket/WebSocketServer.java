@@ -1,10 +1,10 @@
 package cn.kang.netty.websocket;
 
+import cn.kang.netty.handler.WebSocketServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
-import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
@@ -38,7 +38,7 @@ public class WebSocketServer {
                                     .addLast("http-codec", new HttpServerCodec())
                                     .addLast("aggregator", new HttpObjectAggregator(65536))
                                     .addLast("http-chunked", new ChunkedWriteHandler())
-                                    .addLast("handler", new cn.kang.netty.websocket.WebSocketServerHandler());
+                                    .addLast("handler", new WebSocketServerHandler());
                         }
                     });
 

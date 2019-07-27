@@ -1,7 +1,6 @@
 package cn.kang.netty.channel;
 
 import cn.kang.common.protocol.PersonMessage;
-import cn.kang.common.protocol.SglMsg;
 import cn.kang.netty.handler.ServerFrameHandler;
 import com.google.protobuf.MessageLite;
 import com.google.protobuf.MessageLiteOrBuilder;
@@ -45,7 +44,7 @@ public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> 
             pipeline.addLast(new MessageToMessageDecoder<WebSocketFrame>() {
                 @Override
                 protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame, List<Object> objs) throws Exception {
-                    ByteBuf buf = ((BinaryWebSocketFrame) frame).content();
+                    ByteBuf buf = (frame).content();
                     objs.add(buf);
                     buf.retain();
                 }
