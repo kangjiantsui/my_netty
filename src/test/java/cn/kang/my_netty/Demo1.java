@@ -25,6 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -266,17 +267,18 @@ public class Demo1 {
         System.out.println("***********************************");
 
     }
+
     @Test
-    public void demoT(){
-        for (int i=0;i<200;i++){
-            boolean b=i==i;
-            System.out.println(b+" "+i);
+    public void demoT() {
+        for (int i = 0; i < 200; i++) {
+            boolean b = i == i;
+            System.out.println(b + " " + i);
         }
     }
 
     @Test
-    public void t1(){
-        System.out.println(128==128);
+    public void t1() {
+        System.out.println(128 == 128);
     }
 
     public void add(String s) {
@@ -721,8 +723,8 @@ public class Demo1 {
     public void demo64() {
         BigDecimal a = valueOf(0);
         for (int i = 0; i < 1500000; i++) {
-            a=a.add(valueOf(0.000001));
-            System.out.println(a.multiply(a)+"\t\t"+a);
+            a = a.add(valueOf(0.000001));
+            System.out.println(a.multiply(a) + "\t\t" + a);
         }
     }
 
@@ -758,7 +760,7 @@ public class Demo1 {
         System.out.println(map1.equals(map));
     }
 
-    public static class Car{
+    public static class Car {
         Integer color = 1;
     }
 
@@ -791,6 +793,87 @@ public class Demo1 {
             return (Person) super.clone();
         }
     }
+
+    public static interface MyListener {
+        void doSomething(String name);
+    }
+
+    public static class MyButton {
+        private MyListener listener;
+
+        public void setListener(MyListener listener) {
+            this.listener = listener;
+        }
+
+        public void click(String name) {
+            listener.doSomething(name);
+        }
+    }
+
+    @Test
+    public void demo68() {
+        MyButton button = new MyButton();
+        button.setListener(System.out::println);
+    }
+
+
+    public static abstract class Abstract<T> {
+        public abstract T getSomething();
+        // Uses inherited methods from Concrete class
+    }
+
+    public static class AbstractLambda<T> extends Abstract<T> {
+
+        private final Supplier<? extends T> supplier;
+
+        public AbstractLambda(Supplier<? extends T> supplier) {
+            this.supplier = supplier;
+        }
+
+        @Override
+        public T getSomething() {
+            return this.supplier.get();
+        }
+    }
+
+    @Test
+    public void demo69() {
+        AbstractLambda<String> a = new AbstractLambda<>(() -> "hello world");
+        System.out.println(a.getSomething());
+    }
+
+    @FunctionalInterface
+    public static interface Interface {
+        void doSomething();
+
+    }
+
+    public static class Implements implements Interface {
+
+        @Override
+        public void doSomething() {
+
+        }
+
+        public Implements(Interface anInterface) {
+
+        }
+    }
+
+    @Test
+    public void demo70() {
+        new Thread(() -> System.out.println("In Java8, There is Lambda expression!")).start();
+
+        Interface anInterface = () -> {
+
+        };
+
+        Implements anImplements = new Implements(() -> {
+
+        });
+    }
+
+
 }
 
 

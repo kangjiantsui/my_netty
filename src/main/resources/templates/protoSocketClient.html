@@ -33,12 +33,12 @@
                     console.log("解码全部完成")
                 }
             })
-        }
+        };
         //连接建立的回调函数
         socket.onopen = function (event) {
             var ta = document.getElementById("responseText");
             ta.value = "连接开启";
-        }
+        };
         //连接断掉的回调函数
         socket.onclose = function (event) {
             var ta = document.getElementById("responseText");

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Protobuf</title>
@@ -9,7 +9,8 @@
     <button onclick="send()">点我发送</button>
 </div>
 </body>
-<script type="text/javascript" src="../js/proto/awesome.js"></script>
+<!--<script src="../static/js/proto/awesome.js" ></script>-->
+<script th:src="@{/static/js/proto/awesome.js}"></script>
 <script type="text/javascript">
     let message = new proto.Person();
     message.setId(23);
@@ -25,11 +26,12 @@
     socket.onclose = function () {
         console.log('socket关闭');
     };
+
     function send() {
         if (socket.readyState === WebSocket.OPEN) {
             console.log('发送消息');
             socket.send(message.serializeBinary());
-        }else {
+        } else {
             console.log('还没开')
         }
     }
