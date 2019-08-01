@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
 <head>
     <meta charset="UTF-8">
     <title>Protobuf</title>
@@ -19,7 +22,8 @@
     let bytes = message.serializeBinary();
     console.log(message);
 
-    let socket = new WebSocket("ws://localhost:8899/ws");
+    // let socket = new WebSocket("ws://localhost:8899/ws");
+    let socket = new WebSocket("ws://114.116.175.209:8899/ws");
     socket.onopen = function () {
         console.log('socket开启');
     };
