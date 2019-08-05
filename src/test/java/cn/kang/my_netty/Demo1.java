@@ -7,7 +7,6 @@ import com.google.common.util.concurrent.ServiceManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
@@ -26,11 +25,10 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static java.math.BigDecimal.*;
+import static java.math.BigDecimal.valueOf;
 
 public class Demo1 {
     private Jedis jedis;
@@ -139,14 +137,14 @@ public class Demo1 {
         integers.add(1);
         integers.add(2);
         integers.add(3);
-        for (int i = 0; i < integers.size(); i++) {
-            System.out.println(integers.get(i));
+        for (Integer integer : integers) {
+            System.out.println(integer);
         }
     }
 
     @Test
     public void demo12() {
-        List<Integer> list = new ArrayList();
+        List<Integer> list = new ArrayList<>();
         list.add(1);
         list.add(2);
         System.out.println(list);
@@ -185,24 +183,9 @@ public class Demo1 {
 
     @Test
     public void demo16() {
-        Thread shutdownThread = new Thread() {
-            @Override
-            public void run() {
-                System.out.println("shutdownThread...");
-            }
-        };
-        Thread thread1 = new Thread() {
-            @Override
-            public void run() {
-                System.out.println("thread1 run ..");
-            }
-        };
-        Thread thread2 = new Thread() {
-            @Override
-            public void run() {
-                System.out.println("thread2 run ..");
-            }
-        };
+        Thread shutdownThread = new Thread(() -> System.out.println("shutdownThread..."));
+        Thread thread1 = new Thread(() -> System.out.println("thread1 run .."));
+        Thread thread2 = new Thread(() -> System.out.println("thread2 run .."));
         Runtime.getRuntime().addShutdownHook(shutdownThread);
         thread1.start();
         thread2.start();
@@ -210,19 +193,16 @@ public class Demo1 {
 
     @Test
     public void demo17() {
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    System.out.println(new Date());
+        Thread thread = new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
+                System.out.println(new Date());
             }
-        };
+        });
         thread.run();
     }
 
@@ -271,14 +251,14 @@ public class Demo1 {
     @Test
     public void demoT() {
         for (int i = 0; i < 200; i++) {
-            boolean b = i == i;
+            boolean b = true;
             System.out.println(b + " " + i);
         }
     }
 
     @Test
     public void t1() {
-        System.out.println(128 == 128);
+        System.out.println(true);
     }
 
     public void add(String s) {
@@ -826,7 +806,7 @@ public class Demo1 {
 
         private final Supplier<? extends T> supplier;
 
-        public AbstractLambda(Supplier<? extends T> supplier) {
+        private AbstractLambda(Supplier<? extends T> supplier) {
             this.supplier = supplier;
         }
 
@@ -871,6 +851,27 @@ public class Demo1 {
         Implements anImplements = new Implements(() -> {
 
         });
+    }
+
+    public static class AThread implements Runnable {
+        public static Map<Integer, Integer> map = new HashMap<>();
+        public static Random random = new Random();
+
+        @Override
+        public void run() {
+            while (map.size() < 100) {
+                map.put(random.nextInt(), map.size());
+                System.out.println(Thread.currentThread().getName() + ":    " + map.size());
+            }
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread thread1 = new Thread(new AThread());
+        Thread thread2 = new Thread(new AThread());
+        thread1.start();
+        thread2.start();
+        Thread.sleep(3000);
     }
 
 
@@ -951,29 +952,29 @@ class Ball {
         this.a = a;
     }
 
-    public Ball() {
+    Ball() {
 
     }
 }
 
 class A {
-    private ArrayList list;
+    private ArrayList<Integer> list;
 
     private int anInt;
 
-    public int getAnInt() {
+    int getAnInt() {
         return anInt;
     }
 
-    public void setAnInt(int anInt) {
+    void setAnInt(int anInt) {
         this.anInt = anInt;
     }
 
-    public ArrayList getList() {
+    public ArrayList<Integer> getList() {
         return list;
     }
 
-    public void setList(ArrayList list) {
+    public void setList(ArrayList<Integer> list) {
         this.list = list;
     }
 

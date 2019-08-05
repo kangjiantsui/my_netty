@@ -40,7 +40,7 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
 
 
     @Override
-    public void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+    public void channelRead0(ChannelHandlerContext ctx, Object msg)  {
         // 传统的HTTP接入
         if (msg instanceof FullHttpRequest) {
             handleHttpRequest(ctx, (FullHttpRequest) msg);
@@ -52,11 +52,11 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
     }
 
     @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+    public void channelReadComplete(ChannelHandlerContext ctx)  {
         ctx.flush();
     }
 
-    private void handleHttpRequest(ChannelHandlerContext ctx, FullHttpRequest req) throws Exception {
+    private void handleHttpRequest(ChannelHandlerContext ctx, FullHttpRequest req)  {
 
         // 如果HTTP解码失败，返回HHTP异常
         if (!req.decoderResult().isSuccess() || (!"websocket".equals(req.headers().get("Upgrade")))) {
@@ -104,8 +104,8 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
 
     private static void sendHttpResponse(ChannelHandlerContext ctx, FullHttpRequest req, FullHttpResponse res) {
         // 返回应答给客户端
-        if (res.getStatus().code() != 200) {
-            ByteBuf buf = Unpooled.copiedBuffer(res.getStatus().toString(), CharsetUtil.UTF_8);
+        if (res.status().code() != 200) {
+            ByteBuf buf = Unpooled.copiedBuffer(res.status().toString(), CharsetUtil.UTF_8);
             res.content().writeBytes(buf);
             buf.release();
             HttpUtil.setContentLength(res, res.content().readableBytes());
@@ -119,7 +119,7 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)  {
         cause.printStackTrace();
         ctx.close();
     }

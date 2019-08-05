@@ -28,7 +28,7 @@ public class Publisher extends Thread {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         Jedis jedis = jedisPool.getResource();                      //连接池中取出一个连接
         while (true) {
-            String line = null;
+            String line;
             try {
                 line = bufferedReader.readLine();
                 if (!"quit".equals(line)) {

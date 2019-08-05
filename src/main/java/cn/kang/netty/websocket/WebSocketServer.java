@@ -20,20 +20,18 @@ public class WebSocketServer {
     private EventLoopGroup bossGroup;
     @Autowired
     private EventLoopGroup workGroup;
-    private ServerBootstrap b;
-    private Channel ch;
 
 
     @Async
     public void run(int port) throws Exception {
         try {
-            b = new ServerBootstrap();
+            ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workGroup)
                     .channel(NioServerSocketChannel.class)
                     .childHandler(new ChannelInitializer<SocketChannel>() {
 
                         @Override
-                        protected void initChannel(SocketChannel ch) throws Exception {
+                        protected void initChannel(SocketChannel ch)  {
                             ch.pipeline()
                                     .addLast("http-codec", new HttpServerCodec())
                                     .addLast("aggregator", new HttpObjectAggregator(65536))
@@ -42,7 +40,7 @@ public class WebSocketServer {
                         }
                     });
 
-            ch = b.bind(port).sync().channel();
+            Channel ch = b.bind(port).sync().channel();
             System.out.println("Web socket server started at port " + port + '.');
             System.out.println("Open your browser and navigate to http://localhost:" + port + '/');
 

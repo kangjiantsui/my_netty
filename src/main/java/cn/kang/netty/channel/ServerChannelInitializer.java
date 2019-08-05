@@ -26,7 +26,7 @@ import static io.netty.buffer.Unpooled.wrappedBuffer;
 
 public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> {
     @Override
-    protected void initChannel(SocketChannel ch) throws Exception {
+    protected void initChannel(SocketChannel ch)  {
         {
             ChannelPipeline pipeline = ch.pipeline();
             // HTTP请求的解码和编码
@@ -43,7 +43,7 @@ public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> 
             // 协议包解码
             pipeline.addLast(new MessageToMessageDecoder<WebSocketFrame>() {
                 @Override
-                protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame, List<Object> objs) throws Exception {
+                protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame, List<Object> objs) {
                     ByteBuf buf = (frame).content();
                     objs.add(buf);
                     buf.retain();
@@ -52,7 +52,7 @@ public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> 
             // 协议包编码
             pipeline.addLast(new MessageToMessageEncoder<MessageLiteOrBuilder>() {
                 @Override
-                protected void encode(ChannelHandlerContext ctx, MessageLiteOrBuilder msg, List<Object> out) throws Exception {
+                protected void encode(ChannelHandlerContext ctx, MessageLiteOrBuilder msg, List<Object> out) {
                     ByteBuf result = null;
                     if (msg instanceof MessageLite) {
                         result = wrappedBuffer(((MessageLite) msg).toByteArray());
@@ -64,6 +64,7 @@ public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> 
                     // ==== 上面代码片段是拷贝自TCP ProtobufEncoder 源码 ====
                     // 然后下面再转成websocket二进制流，因为客户端不能直接解析protobuf编码生成的
 
+                    assert result != null;
                     WebSocketFrame frame = new BinaryWebSocketFrame(result);
                     out.add(frame);
                 }

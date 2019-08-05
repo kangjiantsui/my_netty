@@ -12,14 +12,14 @@ import java.nio.charset.Charset;
 public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+    public void channelRead(ChannelHandlerContext ctx, Object msg)  {
         ByteBuf byteBuf = (ByteBuf) msg;
         System.out.print(byteBuf.toString(Charset.forName("utf-8")));
         ctx.writeAndFlush(msg);
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)  {
        //Close the connection when an exception is raised
         cause.printStackTrace();
         ctx.close();

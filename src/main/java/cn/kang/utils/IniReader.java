@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.util.Properties;
 
 public class IniReader {
-    public Properties ini = null;
+    private Properties ini = null;
 
     public IniReader(String fileString) {
         File file = new File(fileString);

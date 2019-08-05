@@ -22,8 +22,8 @@
     let bytes = message.serializeBinary();
     console.log(message);
 
-    // let socket = new WebSocket("ws://localhost:8899/ws");
-    let socket = new WebSocket("ws://114.116.175.209:8899/ws");
+    let socket = new WebSocket("ws://localhost:8899/ws");
+    // let socket = new WebSocket("ws://114.116.175.209:8899/ws");
     socket.onopen = function () {
         console.log('socket开启');
     };
