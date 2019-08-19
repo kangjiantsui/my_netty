@@ -4,6 +4,7 @@ import cn.kang.utils.IniReader;
 import com.google.common.util.concurrent.AbstractIdleService;
 import com.google.common.util.concurrent.Service;
 import com.google.common.util.concurrent.ServiceManager;
+import lombok.Data;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +19,8 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
@@ -168,7 +170,7 @@ public class Demo1 {
         ArrayList<Integer> list = new ArrayList<>();
         list.add(1);
         a.setList(list);
-        a.setAnInt(1);
+        a.setAnInt();
         System.out.println(a.getList());
         System.out.println(a.getAnInt());
         a.add();
@@ -289,8 +291,8 @@ public class Demo1 {
 
     @Test
     public void demo22() {
-        System.out.println(new Demo1().getClass().getSimpleName());
-        System.out.println(new Demo1().getClass().getName());
+        System.out.println(Demo1.class.getSimpleName());
+        System.out.println(Demo1.class.getName());
     }
 
     @Test
@@ -379,7 +381,6 @@ public class Demo1 {
         parents.add(p1);
         parents.add(p2);
         System.out.println(parents);
-        ;
         parents.forEach(e -> {
             if ("你好".equals(e.getName())) {
                 e.setName("我好");
@@ -443,7 +444,7 @@ public class Demo1 {
         int[] array = {1, 2, 3, 5, 8, 13, 21, 34};
         int a = 1;
         int b = 2;
-        int temp = 0;
+        int temp;
         for (int i = 0; i < 100; i++) {
             temp = a + b;
             a = b;
@@ -579,7 +580,7 @@ public class Demo1 {
     }
 
 
-    public void function1(String str) {
+    private void function1(String str) {
         System.out.println("print value:" + str);
     }
 
@@ -595,7 +596,7 @@ public class Demo1 {
     }
 
     private static class Dog {
-        public static void wangWang() {
+        static void wangWang() {
             System.out.println("旺旺");
         }
     }
@@ -670,7 +671,7 @@ public class Demo1 {
     public void demo62() {
         for (int j = 0; j < 100; j++) {
             int count = 0;
-            int a = 0;
+            int a;
             int d = 0;
             while (true) {
                 boolean flag = false;
@@ -853,6 +854,131 @@ public class Demo1 {
         });
     }
 
+    @Data
+    public static class Cat {
+        Integer name;
+
+        Cat(Integer name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return "Cat{" +
+                    "name=" + name +
+                    '}';
+        }
+
+
+    }
+
+    @Test
+    public void demo71() {
+        Cat cat1 = new Cat(5);
+        Cat cat2 = new Cat(4);
+        Cat cat3 = new Cat(6);
+        List<Cat> cats = new ArrayList<>();
+
+        cats.add(cat1);
+        cats.add(cat2);
+        cats.add(cat3);
+
+        cats.sort(Comparator.comparingInt(a -> a.name));
+        System.out.println(cats);
+    }
+
+    private void method1(String str, Consumer<Object> callback) {
+        System.out.println(str);
+        callback.accept("哈哈");
+    }
+
+    @Test
+    public void demo72() {
+        method1("呵呵", System.out::println);
+    }
+
+    @Test
+    public void demo73() {
+        Integer a = null;
+        System.out.println(a);
+    }
+
+    @Test
+    public void demo74() {
+        ABB abb = new ABB(null);
+    }
+
+    @Test
+    public void demo75() {
+        System.out.println(100 >>> 1);
+    }
+
+    public static class ABB {
+        private String name;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        ABB(String name) {
+            this.name = name;
+        }
+    }
+
+    //HH:mm:ss
+    @Test
+    public void demo76() throws ParseException {
+/*        System.out.println(LocalDateTime.ofInstant(new Date(System.currentTimeMillis()).toInstant(), ZoneId.systemDefault()));
+        long until = LocalDateTime.now().plusDays(1).until(LocalDateTime.now(), ChronoUnit.DAYS);
+        System.out.println(until);*/
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(System.currentTimeMillis()), ZoneId.systemDefault());
+        System.out.println(localDateTime);
+    }
+
+    @Test
+    public void demo77() {
+        Cat cat1 = new Cat(666);
+        Cat cat2 = new Cat(777);
+        List<Cat> cats = new ArrayList<>();
+        cats.add(cat1);
+        cats.add(cat2);
+        System.out.println(cats);
+        cats.stream().filter(e -> e.getName() == 666).forEach(e -> cats.set(cats.indexOf(e), new Cat(555)));
+        System.out.println(cats);
+    }
+
+    @Test
+    public void demo78() throws Exception {
+        List<Integer> integers = Arrays.asList(3, 7, 5, 9, 1);
+        Integer integer = integers.stream().filter(e -> e > 4).sorted().findFirst().orElseThrow(Exception::new);
+        System.out.println(integer);
+    }
+
+    @Test
+    public void demo79() {
+        LocalDateTime before = LocalDateTime.of(2019, 8, 15, 15, 59, 59, 999999999);
+        LocalDateTime now = LocalDateTime.now();
+        long until = before.until(now, ChronoUnit.DAYS);
+        System.out.println(until);
+    }
+
+    @Test
+    public void demo80() {
+        System.out.println(LocalDateTime.of(LocalDate.now(), LocalTime.MIN).toInstant(ZoneOffset.ofHours(8)).toEpochMilli());
+        System.out.println(new Date(1565884800000L));
+    }
+
+    @Test
+    public void demo81() {
+        LocalDateTime localDateTime = DateTime2Millis.timestampToDatetime(new Date().getTime());
+        System.out.println(localDateTime);
+    }
+
+
     public static class AThread implements Runnable {
         public static Map<Integer, Integer> map = new HashMap<>();
         public static Random random = new Random();
@@ -883,11 +1009,11 @@ class Parent {
 
     private HashMap<Integer, Integer> wifes = new HashMap<Integer, Integer>();
 
-    public HashMap<Integer, Integer> getWifes() {
+    HashMap<Integer, Integer> getWifes() {
         return wifes;
     }
 
-    public void setWifes(HashMap<Integer, Integer> wifes) {
+    void setWifes(HashMap<Integer, Integer> wifes) {
         this.wifes = wifes;
     }
 
@@ -895,7 +1021,7 @@ class Parent {
         return name;
     }
 
-    public Parent(String name) {
+    Parent(String name) {
         this.name = name;
     }
 
@@ -931,12 +1057,12 @@ class Son extends Parent {
 class DemoServcie extends AbstractIdleService {
 
     @Override
-    protected void startUp() throws Exception {
+    protected void startUp() {
         System.out.println("starUp方法执行");
     }
 
     @Override
-    protected void shutDown() throws Exception {
+    protected void shutDown() {
         System.out.println("shutDown方法执行");
     }
 }
@@ -966,8 +1092,8 @@ class A {
         return anInt;
     }
 
-    void setAnInt(int anInt) {
-        this.anInt = anInt;
+    void setAnInt() {
+        this.anInt = 1;
     }
 
     public ArrayList<Integer> getList() {
@@ -978,7 +1104,7 @@ class A {
         this.list = list;
     }
 
-    public void add(int... ints) {
+    public void add() {
         this.list.add(1);
         this.anInt++;
     }

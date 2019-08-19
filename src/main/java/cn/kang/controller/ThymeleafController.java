@@ -10,4 +10,9 @@ public class ThymeleafController {
     public String hello() {
         return "protoDemo";
     }
+
+    @RequestMapping("/hello2")
+    public String hello2() {
+        return "webSocketDemo1";
+    }
 }

@@ -6,3 +6,6 @@ spring:
   thymeleaf:
     cache: false
 
+
+logging:
+  file: logs/my_netty.log
