@@ -26,7 +26,7 @@ import static io.netty.buffer.Unpooled.wrappedBuffer;
 
 public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> {
     @Override
-    protected void initChannel(SocketChannel ch)  {
+    protected void initChannel(SocketChannel ch) {
         {
             ChannelPipeline pipeline = ch.pipeline();
             // HTTP请求的解码和编码
@@ -44,7 +44,7 @@ public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> 
             pipeline.addLast(new MessageToMessageDecoder<WebSocketFrame>() {
                 @Override
                 protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame, List<Object> objs) {
-                    ByteBuf buf = (frame).content();
+                    ByteBuf buf = frame.content();
                     objs.add(buf);
                     buf.retain();
                 }
