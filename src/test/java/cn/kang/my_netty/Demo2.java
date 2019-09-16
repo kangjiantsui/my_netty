@@ -312,9 +312,10 @@ public class Demo2 {
     public void demo22() {
         int[] a = {2, 34, 654, 8, 968, 654, 64, 654, 64, 6, 4};
         List<Integer> list = Arrays.stream(a).boxed().collect(Collectors.toList());
-        int[] b = {64, 8,654};
+        int[] b = {64, 8, 654};
         List<Integer> list1 = Arrays.stream(b).boxed().collect(Collectors.toList());
-        list.removeAll(list1);
+
+        list1.forEach(e -> list.removeIf(f -> f.equals(e)));
         System.out.println(list);
     }
 
@@ -450,7 +451,35 @@ public class Demo2 {
 
     @Test
     public void demo33() {
-        IntStream.rangeClosed(1,1).forEach(System.out::println);
+        System.out.println("😍😘");
+    }
+
+    public static class E {
+        String name = "";
+    }
+
+    public static class F {
+        String name = "";
+
+        public F(E e) {
+            this.name = e.name;
+        }
+
+        public F(Class<? extends E> e) {
+            e.getName();
+        }
+
+        public void sayName() {
+            System.out.println(this.name);
+        }
+    }
+
+    @Test
+    public void demo34() {
+        E e = new E();
+        e.name = "哈哈";
+        Class<? extends E> aClass = e.getClass();
+        F f = new F(e.getClass());
     }
 }
 

@@ -27,56 +27,55 @@ import static io.netty.buffer.Unpooled.wrappedBuffer;
 public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel ch) {
-        {
-            ChannelPipeline pipeline = ch.pipeline();
-            // HTTP请求的解码和编码
-            pipeline.addLast(new HttpServerCodec());
-            // 把多个消息转换为一个单一的FullHttpRequest或是FullHttpResponse，
-            // 原因是HTTP解码器会在每个HTTP消息中生成多个消息对象HttpRequest/HttpResponse,HttpContent,LastHttpContent
-            pipeline.addLast(new HttpObjectAggregator(65536));
-            // 主要用于处理大数据流，比如一个1G大小的文件如果你直接传输肯定会撑暴jvm内存的; 增加之后就不用考虑这个问题了
-            pipeline.addLast(new ChunkedWriteHandler());
-            // WebSocket数据压缩
-            pipeline.addLast(new WebSocketServerCompressionHandler());
-            // 协议包长度限制
-            pipeline.addLast(new WebSocketServerProtocolHandler("/ws", null, true));
-            // 协议包解码
-            pipeline.addLast(new MessageToMessageDecoder<WebSocketFrame>() {
-                @Override
-                protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame, List<Object> objs) {
-                    ByteBuf buf = frame.content();
-                    objs.add(buf);
-                    buf.retain();
+        ChannelPipeline pipeline = ch.pipeline();
+        // HTTP请求的解码和编码
+        pipeline.addLast(new HttpServerCodec());
+        // 把多个消息转换为一个单一的FullHttpRequest或是FullHttpResponse，
+        // 原因是HTTP解码器会在每个HTTP消息中生成多个消息对象HttpRequest/HttpResponse,HttpContent,LastHttpContent
+        pipeline.addLast(new HttpObjectAggregator(65536));
+        // 主要用于处理大数据流，比如一个1G大小的文件如果你直接传输肯定会撑暴jvm内存的; 增加之后就不用考虑这个问题了
+        pipeline.addLast(new ChunkedWriteHandler());
+        // WebSocket数据压缩
+        pipeline.addLast(new WebSocketServerCompressionHandler());
+        // 协议包长度限制
+        pipeline.addLast(new WebSocketServerProtocolHandler("/ws", null, true));
+        //pipeline.addLast(new HttpHandler());
+        // 协议包解码
+        pipeline.addLast(new MessageToMessageDecoder<WebSocketFrame>() {
+            @Override
+            protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame, List<Object> objs) {
+                ByteBuf buf = frame.content();
+                objs.add(buf);
+                buf.retain();
+            }
+        });
+        // 协议包编码
+        pipeline.addLast(new MessageToMessageEncoder<MessageLiteOrBuilder>() {
+            @Override
+            protected void encode(ChannelHandlerContext ctx, MessageLiteOrBuilder msg, List<Object> out) {
+                ByteBuf result = null;
+                if (msg instanceof MessageLite) {
+                    result = wrappedBuffer(((MessageLite) msg).toByteArray());
                 }
-            });
-            // 协议包编码
-            pipeline.addLast(new MessageToMessageEncoder<MessageLiteOrBuilder>() {
-                @Override
-                protected void encode(ChannelHandlerContext ctx, MessageLiteOrBuilder msg, List<Object> out) {
-                    ByteBuf result = null;
-                    if (msg instanceof MessageLite) {
-                        result = wrappedBuffer(((MessageLite) msg).toByteArray());
-                    }
-                    if (msg instanceof MessageLite.Builder) {
-                        result = wrappedBuffer(((MessageLite.Builder) msg).build().toByteArray());
-                    }
-
-                    // ==== 上面代码片段是拷贝自TCP ProtobufEncoder 源码 ====
-                    // 然后下面再转成websocket二进制流，因为客户端不能直接解析protobuf编码生成的
-
-                    assert result != null;
-                    WebSocketFrame frame = new BinaryWebSocketFrame(result);
-                    out.add(frame);
+                if (msg instanceof MessageLite.Builder) {
+                    result = wrappedBuffer(((MessageLite.Builder) msg).build().toByteArray());
                 }
-            });
 
-            // 协议包解码时指定Protobuf字节数实例化为CommonProtocol类型
-            pipeline.addLast(new ProtobufDecoder(PersonMessage.Person.getDefaultInstance()));
+                // ==== 上面代码片段是拷贝自TCP ProtobufEncoder 源码 ====
+                // 然后下面再转成websocket二进制流，因为客户端不能直接解析protobuf编码生成的
 
-            // websocket定义了传递数据的6中frame类型
-            pipeline.addLast(new ServerFrameHandler());
+                assert result != null;
+                WebSocketFrame frame = new BinaryWebSocketFrame(result);
+                out.add(frame);
+            }
+        });
+
+        // 协议包解码时指定Protobuf字节数实例化为CommonProtocol类型
+        pipeline.addLast(new ProtobufDecoder(PersonMessage.Person.getDefaultInstance()));
+
+        // websocket定义了传递数据的6中frame类型
+        pipeline.addLast(new ServerFrameHandler());
 
 
-        }
     }
 }

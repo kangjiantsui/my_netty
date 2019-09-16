@@ -37,6 +37,7 @@ public class ServerFrameHandler extends SimpleChannelInboundHandler<PersonMessag
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)  {
         System.out.println("异常发生");
+        cause.printStackTrace();
         ctx.close();
     }
 }

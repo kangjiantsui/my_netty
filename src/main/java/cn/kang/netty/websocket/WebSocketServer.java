@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class WebSocketServer {
+
     @Autowired
     private EventLoopGroup bossGroup;
     @Autowired
