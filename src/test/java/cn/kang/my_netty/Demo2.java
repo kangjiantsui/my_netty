@@ -1,10 +1,18 @@
 package cn.kang.my_netty;
 
 import com.google.common.eventbus.EventBus;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
 import redis.clients.util.SafeEncoder;
 
+import java.io.*;
+import java.net.*;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -14,6 +22,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+@SuppressWarnings("ALL")
 public class Demo2 {
 
 
@@ -77,6 +86,7 @@ public class Demo2 {
     private static final Jedis jedis = new Jedis("114.116.175.209", 6379);
 
 
+    @SuppressWarnings("unused")
     @Test
     public void demo4() {
         jedis.rpush("1", "哈哈");
@@ -451,7 +461,7 @@ public class Demo2 {
 
     @Test
     public void demo33() {
-        System.out.println("😍😘");
+        System.out.println("☮");
     }
 
     public static class E {
@@ -480,6 +490,99 @@ public class Demo2 {
         e.name = "哈哈";
         Class<? extends E> aClass = e.getClass();
         F f = new F(e.getClass());
+    }
+
+    @Test
+    public void demo35() {
+        int[] i = {1, 3, 5};
+        System.out.println(i[i.length - 1]);
+    }
+
+    @Test
+    public void demo36() {
+        System.out.println(2.01E2);
+    }
+
+    @Test
+    public void demo37() throws IOException, InterruptedException {
+        var baidu = "https://www.baidu.com";
+        var mwx = "http://www.zerobyw4.com/plugin.php?id=jameson_manhua&a=read&zjid=45673";
+        var request = HttpRequest.newBuilder()
+                .uri(URI.create(mwx))
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                .GET()
+                .build();
+        var client = HttpClient.newHttpClient();
+        var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response);
+        System.out.println(response.body());
+    }
+
+    public static void downImages(String filePath, String imgUrl) {
+        // 若指定文件夹没有，则先创建
+        File dir = new File(filePath);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        // 截取图片文件名
+        String fileName = imgUrl.substring(imgUrl.lastIndexOf('/') + 1, imgUrl.length());
+
+        try {
+            // 文件名里面可能有中文或者空格，所以这里要进行处理。但空格又会被URLEncoder转义为加号
+            String urlTail = URLEncoder.encode(fileName, "UTF-8");
+            // 因此要将加号转化为UTF-8格式的%20
+            imgUrl = imgUrl.substring(0, imgUrl.lastIndexOf('/') + 1) + urlTail.replaceAll("\\+", "\\%20");
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        // 写出的路径
+        File file = new File(filePath + File.separator + fileName);
+
+        try {
+            // 获取图片URL
+            URL url = new URL(imgUrl);
+            // 获得连接
+            URLConnection connection = url.openConnection();
+            // 设置10秒的相应时间
+            connection.setConnectTimeout(10 * 1000);
+            // 获得输入流
+            InputStream in = connection.getInputStream();
+            // 获得输出流
+            BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file));
+            // 构建缓冲区
+            byte[] buf = new byte[1024];
+            int size;
+            // 写入到文件
+            while (-1 != (size = in.read(buf))) {
+                out.write(buf, 0, size);
+            }
+            out.close();
+            in.close();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    //爬虫下载漫画
+    @Test
+    public void demo38() throws IOException, InterruptedException {
+        String url = "http://www.zerobyw4.com/plugin.php?id=jameson_manhua&a=read&zjid=45673";
+        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .build();
+        Document document = Jsoup.parse(httpClient.send(request, HttpResponse.BodyHandlers.ofString()).body());
+        Elements zjimg = document.getElementsByClass("zjimg text-center mt0 mb0");
+        zjimg.forEach(e->{
+            String imgSrc = e.getElementsByTag("img").attr("src").toString();
+            System.out.println(imgSrc);
+            downImages("d:/img", imgSrc);
+        });
     }
 }
 
