@@ -32,6 +32,7 @@ import java.util.stream.Stream;
 
 import static java.math.BigDecimal.valueOf;
 
+@SuppressWarnings({"unused", "UnusedAssignment"})
 public class Demo1 {
     private Jedis jedis;
 
@@ -565,6 +566,7 @@ public class Demo1 {
                 "MSFT", "ORCL", "TIBX", "VRSN", "YHOO");
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     public static class YahooFinance {
         public static BigDecimal getPrice(final String ticker) {
             try {
@@ -978,6 +980,32 @@ public class Demo1 {
         System.out.println(localDateTime);
     }
 
+    @Test
+    public void demo82() {
+        var cookieMap = new HashMap<String, String>();
+        var str = "[__cfduid=dec43a22b15ec84c05bc7134fdc798f681569550122; expires=Sat, 26-Sep-20 02:08:42 GMT; path=/; domain=.zerobyw4.com; HttpOnly, kd5S_2132_saltkey=fsESsgG1; expires=Sun, 27-Oct-2019 02:08:42 GMT; Max-Age=2592000; path=/; HttpOnly, kd5S_2132_lastvisit=1569546522; expires=Sun, 27-Oct-2019 02:08:42 GMT; Max-Age=2592000; path=/, kd5S_2132_sid=kvzvnN; expires=Sat, 28-Sep-2019 02:08:42 GMT; Max-Age=86400; path=/, kd5S_2132_lastact=1569550122%09member.php%09logging; expires=Sat, 28-Sep-2019 02:08:42 GMT; Max-Age=86400; path=/, kd5S_2132_ulastactivity=bf69Kx4WBOET2RhHKSPIr9IoR14pZY5c6XCTNy%2BveE9LTHZe9U4l; expires=Sat, 26-Sep-2020 02:08:42 GMT; Max-Age=31536000; path=/, kd5S_2132_sid=kvzvnN; expires=Sat, 28-Sep-2019 02:08:42 GMT; Max-Age=86400; path=/, kd5S_2132_auth=63559kvcTQWL2yYYCtDy%2F8CMNg7zmxkTg1A6Pt8h8prmWI70GVGUE%2FX8PqwnHk6AlcHncMy%2F7SPwMpuMNpvANW4pqLct; path=/; HttpOnly, kd5S_2132_loginuser=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/, kd5S_2132_activationauth=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/, kd5S_2132_pmnum=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/, kd5S_2132_lastcheckfeed=1732511%7C1569550122; expires=Sat, 26-Sep-2020 02:08:42 GMT; Max-Age=31536000; path=/, kd5S_2132_checkfollow=1; expires=Fri, 27-Sep-2019 02:09:12 GMT; Max-Age=30; path=/, kd5S_2132_lip=121.60.87.156%2C1569550113; path=/, kd5S_2132_auth=9d26FYVBMRFJ3Wk4fH%2BGAdBXhPzV7Fuxf%2BLogM03M8S1e4jm6f3onNIVZyZCGPdfWbCk%2Bm6S2eekH2rppBX515llxqZb; expires=Sat, 12-Oct-2019 02:08:42 GMT; Max-Age=1296000; path=/; HttpOnly, kd5S_2132_loginuser=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/, kd5S_2132_activationauth=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/, kd5S_2132_pmnum=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/, kd5S_2132_tshuz_accountlogin=1732511; path=/]";
+        var temp = str.replaceAll(",", ";");
+        Arrays.stream(temp.split(";"))
+                .map(String::trim)
+                .filter(e -> e.startsWith("kd5S_2132_saltkey")
+                        || e.startsWith("kd5S_2132_lip")
+                        || e.startsWith("kd5S_2132_ulastactivity")
+                        || e.startsWith("kd5S_2132_sid")
+                        || e.startsWith("kd5S_2132_lastact")
+                        || e.startsWith("kd5S_2132_lastcheckfeed")
+                        || e.startsWith("kd5S_2132_auth")
+                        || e.startsWith("kd5S_2132_tshuz_accountlogin")
+                        || e.startsWith("kd5S_2132_lastvisit")
+                )
+                .map(e->e.split("="))
+                .forEach(e->cookieMap.put(e[0],e[1]));
+        var cookie = new StringBuilder();
+        cookieMap.forEach((k,v)->{
+            cookie.append(k).append(v).append(";");
+        });
+        System.out.println(cookie);
+    }
+
 
     public static class AThread implements Runnable {
         public static Map<Integer, Integer> map = new HashMap<>();
@@ -1037,6 +1065,7 @@ class Parent {
     }
 }
 
+@SuppressWarnings("ALL")
 class Son extends Parent {
     private String name = "儿子";
 

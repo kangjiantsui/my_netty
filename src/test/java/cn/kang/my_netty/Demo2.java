@@ -1,6 +1,8 @@
 package cn.kang.my_netty;
 
 import com.google.common.eventbus.EventBus;
+import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.util.Lists;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -13,6 +15,7 @@ import java.net.*;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -22,7 +25,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-@SuppressWarnings("ALL")
+@Slf4j
 public class Demo2 {
 
 
@@ -494,28 +497,45 @@ public class Demo2 {
 
     @Test
     public void demo35() {
-        int[] i = {1, 3, 5};
-        System.out.println(i[i.length - 1]);
+        IntStream.rangeClosed(0, 10).limit(2).forEach(e -> {
+            System.out.println(e);
+        });
     }
 
     @Test
     public void demo36() {
-        System.out.println(2.01E2);
+        var map = new HashMap<Integer, ArrayList<Integer>>();
+        var list = new ArrayList<Integer>();
+        map.put(1, Lists.newArrayList(1, 11, 111));
+        map.put(2, Lists.newArrayList(2, 22, 222));
+        map.put(3, Lists.newArrayList(3, 33, 333));
+        List<ArrayList<Integer>> collect = map.keySet().stream().map(map::get).collect(Collectors.toList());
     }
 
     @Test
     public void demo37() throws IOException, InterruptedException {
-        var baidu = "https://www.baidu.com";
-        var mwx = "http://www.zerobyw4.com/plugin.php?id=jameson_manhua&a=read&zjid=45673";
+        var mwx = "http://www.zerobyw4.com/plugin.php?id=jameson_manhua&a=read&zjid=45696";
         var request = HttpRequest.newBuilder()
                 .uri(URI.create(mwx))
                 .header("Content-Type", "application/x-www-form-urlencoded")
+                .header("Cookie",
+//                        "__cfduid=de439f576f99f024c6bae17800f5678291569378977; "
+//                        + "_ga=GA1.2.379535895.1569378978; "
+//                        + "_gid=GA1.2.1790094955.1569378978; "
+//                        + "_gat_gtag_UA_120212798_1=1; "
+//                        + "kd5S_2132_manhuakaiguan=1; "
+//                        + "kd5S_2132_manhuamoshi=2; "
+//                        + "kd5S_2132_manhua_pcadvcookie=5; "
+//                        + "kd5S_2132_checkfollow=1; "
+//                        + "kd5S_2132_sendmail=1; "
+//                        + "kd5S_2132_noticeTitle=1; "
+                        "kd5S_2132_saltkey=XCvJK1ZF;kd5S_2132_sid=Mu0NnU;kd5S_2132_tshuz_accountlogin=1732511;kd5S_2132_lastcheckfeed=1732511%7C1569555737;kd5S_2132_lastvisit=1569552137;kd5S_2132_ulastactivity=a9d1DvZriekOx%2BAxLdGx%2BsOgBGoJTBLpWdIt722eGZcGR4fo31FJ;kd5S_2132_lastact=1569555737%09member.php%09logging;kd5S_2132_lip=121.60.87.156%2C1569555518;kd5S_2132_auth=0191QgV8kQ26bQiCQAeAlLuxU0YdGEEs8FAZM71C8%2B4rW2u073iOYFpFi2qRoiiY74AcyqFSzfekCLhwL4gC0s2W39bJ;"
+                )
                 .GET()
                 .build();
         var client = HttpClient.newHttpClient();
         var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response);
-        System.out.println(response.body());
+        System.out.println(response.statusCode());
     }
 
     public static void downImages(String filePath, String imgUrl) {
@@ -525,17 +545,13 @@ public class Demo2 {
             dir.mkdirs();
         }
         // 截取图片文件名
-        String fileName = imgUrl.substring(imgUrl.lastIndexOf('/') + 1, imgUrl.length());
+        String fileName = imgUrl.substring(imgUrl.lastIndexOf('/') + 1);
 
-        try {
-            // 文件名里面可能有中文或者空格，所以这里要进行处理。但空格又会被URLEncoder转义为加号
-            String urlTail = URLEncoder.encode(fileName, "UTF-8");
-            // 因此要将加号转化为UTF-8格式的%20
-            imgUrl = imgUrl.substring(0, imgUrl.lastIndexOf('/') + 1) + urlTail.replaceAll("\\+", "\\%20");
+        // 文件名里面可能有中文或者空格，所以这里要进行处理。但空格又会被URLEncoder转义为加号
+        String urlTail = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
+        // 因此要将加号转化为UTF-8格式的%20
+        imgUrl = imgUrl.substring(0, imgUrl.lastIndexOf('/') + 1) + urlTail.replaceAll("\\+", "\\%20");
 
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
         // 写出的路径
         File file = new File(filePath + File.separator + fileName);
 
@@ -559,8 +575,6 @@ public class Demo2 {
             }
             out.close();
             in.close();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -570,7 +584,7 @@ public class Demo2 {
     //爬虫下载漫画
     @Test
     public void demo38() throws IOException, InterruptedException {
-        String url = "http://www.zerobyw4.com/plugin.php?id=jameson_manhua&a=read&zjid=45673";
+        String url = "http://www.zerobyw4.com/plugin.php?id=jameson_manhua&a=read&zjid=45674";
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -578,12 +592,82 @@ public class Demo2 {
                 .build();
         Document document = Jsoup.parse(httpClient.send(request, HttpResponse.BodyHandlers.ofString()).body());
         Elements zjimg = document.getElementsByClass("zjimg text-center mt0 mb0");
-        zjimg.forEach(e->{
-            String imgSrc = e.getElementsByTag("img").attr("src").toString();
+        zjimg.forEach(e -> {
+            String imgSrc = e.getElementsByTag("img").attr("src");
             System.out.println(imgSrc);
-            downImages("d:/img", imgSrc);
+            downImages("d:/img1", imgSrc);
         });
     }
+
+    @Test
+    public void demo39() {
+        var loginUrl = "http://www.zerobyw4.com/member.php?mod=logging&action=login&loginsubmit=yes&frommessage&loginhash=LPH5e&inajax=1";
+        var formBody = "username=kangjiantsui&password=Iamwinner!";
+        HttpClient httpClient = HttpClient.newBuilder().build();
+        HttpRequest loginRequest = HttpRequest.newBuilder()
+                .uri(URI.create(loginUrl))
+                .header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0")
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                .POST(HttpRequest.BodyPublishers.ofString(formBody))
+                .build();
+        httpClient.sendAsync(loginRequest, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::headers)
+                .thenAccept(headers -> {
+                    var temp = headers.map().get("set-cookie").toString().replaceAll(",", ";");
+                    var cookieMap = new HashMap<String, String>();
+                    Arrays.stream(temp.split(";"))
+                            .map(String::trim)
+                            .filter(e -> e.startsWith("kd5S_2132_saltkey")
+                                    || e.startsWith("kd5S_2132_lip")
+                                    || e.startsWith("kd5S_2132_ulastactivity")
+                                    || e.startsWith("kd5S_2132_sid")
+                                    || e.startsWith("kd5S_2132_lastact")
+                                    || e.startsWith("kd5S_2132_lastcheckfeed")
+                                    || e.startsWith("kd5S_2132_auth")
+                                    || e.startsWith("kd5S_2132_tshuz_accountlogin")
+                                    || e.startsWith("kd5S_2132_lastvisit")
+                            )
+                            .map(e -> e.split("="))
+                            .forEach(e -> cookieMap.put(e[0], e[1]));
+                    var cookie = new StringBuilder();
+                    cookieMap.forEach((k, v) -> cookie.append(k).append("=").append(v).append(";"));
+                    var allPageUrl = "http://www.zerobyw4.com/plugin.php?id=jameson_manhua&a=bofang&kuid=1657";
+                    var allPageRequest = HttpRequest.newBuilder()
+                            .uri(URI.create(allPageUrl))
+                            .header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0")
+                            .GET()
+                            .build();
+                    httpClient.sendAsync(allPageRequest, HttpResponse.BodyHandlers.ofString())
+                            .thenApply(HttpResponse::body)
+                            .thenAccept(body -> {
+                                Document document = Jsoup.parse(body);
+                                document.getElementsByClass("muludiv").forEach(e -> {
+                                    var chapter = e.getElementsByClass("uk-button uk-button-default").text();
+                                    var pageUrl = e.getElementsByClass("uk-button uk-button-default").attr("href").replaceAll("./", document.baseUri());
+                                    var pageRequest = HttpRequest.newBuilder()
+                                            .uri(URI.create(pageUrl))
+                                            .header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0")
+                                            .header("Cookie", cookie.toString())
+                                            .GET()
+                                            .build();
+                                    httpClient.sendAsync(pageRequest, HttpResponse.BodyHandlers.ofString())
+                                            .thenApply(HttpResponse::body)
+                                            .thenAccept(subBody -> {
+                                                Document subDocument = Jsoup.parse(subBody);
+                                                var zjimg = subDocument.getElementsByClass("zjimg text-center mt0 mb0").size() != 0
+                                                        ? subDocument.getElementsByClass("zjimg text-center mt0 mb0")
+                                                        : subDocument.getElementsByClass("uk-text-center mb0");
+                                                zjimg.forEach(f -> {
+                                                    String imgSrc = f.getElementsByTag("img").attr("src");
+                                                    System.out.println(imgSrc);
+                                                    downImages("d:/Onepunch Man/" + chapter, imgSrc);
+                                                });
+                                            }).join();
+                                });
+                            }).join();
+                }).join();
+    }
+
 }
 
 
