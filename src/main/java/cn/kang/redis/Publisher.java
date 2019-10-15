@@ -34,7 +34,8 @@ public class Publisher extends Thread {
                 if (!"quit".equals(line)) {
                     jedis.publish("myChannel", line);      //从 myChannel 的频道上推送消息
                 } else {
-                    break;
+                    System.out.println("系统退出");
+                    System.exit(1);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

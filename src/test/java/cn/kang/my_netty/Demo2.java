@@ -1,6 +1,9 @@
 package cn.kang.my_netty;
 
+import cn.kang.common.protocol.SglMsg;
 import com.google.common.eventbus.EventBus;
+import com.google.common.io.BaseEncoding;
+import com.google.protobuf.InvalidProtocolBufferException;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
 import org.jsoup.Jsoup;
@@ -10,6 +13,8 @@ import org.junit.Test;
 import redis.clients.jedis.Jedis;
 import redis.clients.util.SafeEncoder;
 
+
+import javax.xml.bind.DatatypeConverter;
 import java.io.*;
 import java.net.*;
 import java.net.http.HttpClient;
@@ -497,9 +502,9 @@ public class Demo2 {
 
     @Test
     public void demo35() {
-        IntStream.rangeClosed(0, 10).limit(2).forEach(e -> {
-            System.out.println(e);
-        });
+        var list = new ArrayList<Integer>();
+        IntStream.rangeClosed(1, 10000).parallel().forEach(list::add);
+        System.out.println(list.size());
     }
 
     @Test
@@ -641,7 +646,7 @@ public class Demo2 {
                             .thenApply(HttpResponse::body)
                             .thenAccept(body -> {
                                 Document document = Jsoup.parse(body);
-                                document.getElementsByClass("muludiv").forEach(e -> {
+                                document.getElementsByClass("muludiv").parallelStream().forEach(e -> {
                                     var chapter = e.getElementsByClass("uk-button uk-button-default").text();
                                     var pageUrl = e.getElementsByClass("uk-button uk-button-default").attr("href").replaceAll("./", document.baseUri());
                                     var pageRequest = HttpRequest.newBuilder()
@@ -657,10 +662,11 @@ public class Demo2 {
                                                 var zjimg = subDocument.getElementsByClass("zjimg text-center mt0 mb0").size() != 0
                                                         ? subDocument.getElementsByClass("zjimg text-center mt0 mb0")
                                                         : subDocument.getElementsByClass("uk-text-center mb0");
-                                                zjimg.forEach(f -> {
+                                                zjimg.parallelStream().forEach(f -> {
                                                     String imgSrc = f.getElementsByTag("img").attr("src");
                                                     System.out.println(imgSrc);
-                                                    downImages("d:/Onepunch Man/" + chapter, imgSrc);
+//                                                    System.out.println("Thread"+Thread.currentThread().getId());
+//                                                    downImages("d:/Onepunch Man/" + chapter, imgSrc);
                                                 });
                                             }).join();
                                 });
@@ -668,6 +674,41 @@ public class Demo2 {
                 }).join();
     }
 
+    @Test
+    public void demo40() throws InvalidProtocolBufferException {
+        byte[] bytes = DatatypeConverter.parseHexBinary("0000017108ad0210b9986ce212e6020a044153444b10954e1a076e6f783640766e220b312e302e302e39383836352a0c2e313232343031383232372e3299027b2269734a7362223a66616c73652c22757365724167656e74223a224d6f7a696c6c612f352e30202857696e646f7773204e542031302e303b2057696e36343b2078363429204170706c655765624b69742f3533372e333620284b48544d4c2c206c696b65204765636b6f29204368726f6d652f37372e302e333836352e3930205361666172692f3533372e3336222c2275646964223a223f3f3f3f3f3f3f3f3f3f222c226f73223a2257696e646f7773222c22706c6174666f726d223a3130312c2262726f7773657254797065223a226368726f6d65222c2262726f7773657256657273696f6e223a2237372e302e333836352e3930222c226f7356657273696f6e223a22222c226f734d61696e56657273696e223a307d3a0b312e302e302e393838363542004a0a313232343031383232375200");
+        SglMsg.SglReqMsg sglReqMsg = SglMsg.SglReqMsg.parseFrom(bytes);
+
+    }
+
+    @Test
+    public void demo41() {
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(1, 2);
+        map.put(2, 3);
+        map.forEach((k, v) -> {
+            map.put(k, 1);
+        });
+        System.out.println(map);
+    }
+
+    @Test
+    public void demo42() {
+        var map = new HashMap<Integer, Integer>();
+        map.put(1, 2);
+        map.put(2, 3);
+        boolean contains = map.keySet().contains(1);
+        System.out.println(contains);
+    }
+
+    @Test
+    public void demo43() {
+        var str = "asd_asda_zxczc";
+        String[] s = str.split("_");
+        System.out.println(Arrays.asList(s));
+        var s1 = s[s.length - 1];
+        System.out.println(s1);
+    }
 }
 
 
