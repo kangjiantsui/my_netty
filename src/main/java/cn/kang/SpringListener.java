@@ -35,6 +35,7 @@ public class SpringListener implements ApplicationListener<ContextRefreshedEvent
                 publisher.start();
                 webSocketServer.run(8080);
                 protobufServer.run(8899);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
