@@ -5,6 +5,7 @@ import cn.kang.netty.websocket.WebSocketServer;
 import cn.kang.redis.PubSubDemo;
 import cn.kang.redis.Publisher;
 import cn.kang.redis.SubThread;
+import cn.kang.socket.ScoketClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;

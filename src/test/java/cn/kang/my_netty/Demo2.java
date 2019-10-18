@@ -1,5 +1,6 @@
 package cn.kang.my_netty;
 
+import org.apache.commons.codec.binary.Base64;
 import cn.kang.common.protocol.*;
 import com.google.common.eventbus.EventBus;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -709,8 +710,9 @@ public class Demo2 {
     }
 
     @Test
-    public void demo44() {
-
+    public void demo44() throws InvalidProtocolBufferException {
+        byte[] bytes = Base64.decodeBase64("00000006086510e5cf08");
+        SglMsg.SglReqMsg.parseFrom(bytes);
     }
 }
 
