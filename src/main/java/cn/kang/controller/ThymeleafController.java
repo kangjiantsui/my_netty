@@ -15,6 +15,7 @@ public class ThymeleafController {
     public String hello2() {
         return "webSocketDemo1";
     }
+
     @RequestMapping("/hello3")
     public String hello3() {
         return "connectMyGameServer";

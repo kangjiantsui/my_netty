@@ -6,10 +6,14 @@ import com.google.common.eventbus.EventBus;
 import com.google.protobuf.InvalidProtocolBufferException;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.junit.Test;
+import org.springframework.boot.system.SystemProperties;
 import redis.clients.jedis.Jedis;
 import redis.clients.util.SafeEncoder;
 
@@ -23,6 +27,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -714,6 +720,81 @@ public class Demo2 {
         byte[] bytes = Base64.decodeBase64("00000006086510e5cf08");
         SglMsg.SglReqMsg.parseFrom(bytes);
     }
+
+    @Test
+    public void demo45() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("object", "object");
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.put(jsonObject);
+        JSONObject jsonObject1 = new JSONObject(jsonArray.toString());
+    }
+
+    public enum IAPType {
+        IAP_MONTH_CHARGE_SILVER(11),        //白银月卡
+        IAP_MONTH_CHARGE_GOLDEN(12),        //黄金月卡
+        IAP_MONTH_CHARGE_DIAMOND(13);
+
+        private IAPType(int type) {
+            this.value = type;
+        }
+
+        public int value() {
+            return this.value;
+        }
+
+        private int value;
+    }
+
+    @Test
+    public void demo46() throws JSONException {
+        HashMap<String, String> stringStringHashMap = new HashMap<>();
+        stringStringHashMap.put("1", "2");
+        stringStringHashMap.put("2", "2");
+        stringStringHashMap.put("3", "2");
+        JSONObject jsonObject = new JSONObject(stringStringHashMap);
+        System.out.println(jsonObject);
+        Iterator keys = jsonObject.keys();
+        while (keys.hasNext()) {
+            System.out.println(keys.next());
+        }
+    }
+
+    @Test
+    public void demo47() {
+        System.out.println("\\");
+        char c = "\\".toCharArray()[0];
+        System.out.println(c);
+    }
+
+    @Test
+    public void demo48() throws JSONException {
+        TestClass1.say();
+    }
+
+    public static class TestClass1{
+         static void say() {
+             ThreadLocal<String> tl = new ThreadLocal<>();
+             String s = tl.get();
+             System.out.println(s);
+         }
+    }
+
+    @Test
+    public void demo49() {
+        ThreadLocal<String> tl = new ThreadLocal<>();
+        tl.set("111");
+        String s = tl.get();
+        System.out.println(s);
+        TestClass1.say();
+    }
+
+    @Test
+    public void demo50() throws FileNotFoundException {
+        BufferedReader in = new BufferedReader(new FileReader("aaa.txt"));
+        in.lines().forEach(System.out::println);
+    }
+
 }
 
 

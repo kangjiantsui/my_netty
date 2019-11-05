@@ -5,12 +5,14 @@ import cn.kang.netty.websocket.WebSocketServer;
 import cn.kang.redis.PubSubDemo;
 import cn.kang.redis.Publisher;
 import cn.kang.redis.SubThread;
-import cn.kang.socket.ScoketClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisPool;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 @Component
 public class SpringListener implements ApplicationListener<ContextRefreshedEvent> {
