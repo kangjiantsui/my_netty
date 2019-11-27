@@ -16,7 +16,7 @@
 <script th:src="@{/static/js/proto/awesome.js}"></script>
 <script type="text/javascript">
     let message = new proto.Person();
-    message.setId(23);
+    message.setId(234);
     message.setName('老王');
 
     let bytes = message.serializeBinary();
@@ -29,6 +29,9 @@
     };
     socket.onclose = function () {
         console.log('socket关闭');
+    };
+    socket.onmessage = function (event) {
+        console.log('接收到服务器返回');
     };
 
     function send() {
