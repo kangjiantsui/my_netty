@@ -17,9 +17,15 @@ import io.netty.handler.codec.http.websocketx.*;
 import io.netty.handler.stream.ChunkedWriteHandler;
 
 import java.io.UnsupportedEncodingException;
+import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * 可以同时处理http和websocket请求的channel
+ */
 @SuppressWarnings("RedundantThrows")
 public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> {
+    private static AtomicInteger connectNum = new AtomicInteger(0);
+
     private WebSocketServerHandshaker handshaker;
 
     @Override
@@ -34,7 +40,23 @@ public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> 
         pipeline.addLast(new ChunkedWriteHandler());
         pipeline.addLast(new LengthFieldBasedFrameDecoder(16777215, 0, 4, 0, 4));
         pipeline.addLast(new LengthFieldPrepender(4));
+//        pipeline.addLast(new NettyConnectServerHandler(new AtomicInteger(0)));
         pipeline.addLast(new SimpleChannelInboundHandler() {
+
+            @Override
+            public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
+                super.channelRegistered(ctx);
+                connectNum.addAndGet(1);
+                System.out.println("连接接入,目前连接数:" + connectNum);
+            }
+
+            @Override
+            public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+                super.channelUnregistered(ctx);
+                connectNum.addAndGet(-1);
+                System.out.println("连接断开,目前连接数:" + connectNum);
+            }
+
             @Override
             protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
                 if (msg instanceof FullHttpRequest) {
@@ -68,6 +90,7 @@ public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> 
                     PersonMessage.Person person = PersonMessage.Person.parseFrom(bytes);
                     System.out.println(person.getId());
                     System.out.println(person.getName());
+                    System.out.println("连接数:"+connectNum);
                 }
             }
         });

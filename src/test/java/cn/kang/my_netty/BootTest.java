@@ -10,12 +10,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class BootTest {
-
-    @Autowired
-    private Publisher publisher;
-
-    @Test
     public void demo1() {
-        System.out.println("Go");
+
     }
+
 }

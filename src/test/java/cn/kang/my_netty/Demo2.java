@@ -1,10 +1,17 @@
 package cn.kang.my_netty;
 
-import org.apache.commons.codec.binary.Base64;
-import cn.kang.common.protocol.*;
+import cn.kang.common.protocol.SglMsg;
 import com.google.common.eventbus.EventBus;
 import com.google.protobuf.InvalidProtocolBufferException;
-import lombok.extern.slf4j.Slf4j;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+import io.netty.bootstrap.Bootstrap;
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.*;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.channel.socket.nio.NioSocketChannel;
+import org.apache.commons.codec.binary.Base64;
 import org.assertj.core.util.Lists;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,7 +20,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.junit.Test;
-import org.springframework.boot.system.SystemProperties;
 import redis.clients.jedis.Jedis;
 import redis.clients.util.SafeEncoder;
 
@@ -27,11 +33,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
@@ -39,7 +44,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-@Slf4j
+@SuppressWarnings("RedundantThrows")
 public class Demo2 {
 
 
@@ -772,12 +777,12 @@ public class Demo2 {
         TestClass1.say();
     }
 
-    public static class TestClass1{
-         static void say() {
-             ThreadLocal<String> tl = new ThreadLocal<>();
-             String s = tl.get();
-             System.out.println(s);
-         }
+    public static class TestClass1 {
+        static void say() {
+            ThreadLocal<String> tl = new ThreadLocal<>();
+            String s = tl.get();
+            System.out.println(s);
+        }
     }
 
     @Test
@@ -793,6 +798,107 @@ public class Demo2 {
     public void demo50() throws FileNotFoundException {
         BufferedReader in = new BufferedReader(new FileReader("aaa.txt"));
         in.lines().forEach(System.out::println);
+    }
+
+    private enum SocketState {
+        NONE, OPENED, CLOSED;
+
+        SocketState() {
+        }
+    }
+
+    @Test
+    public void demo51() throws InterruptedException {
+        new ServerBootstrap()
+                .group(new NioEventLoopGroup())
+                .channel(NioServerSocketChannel.class)
+                .childHandler(new ChannelInitializer() {
+                    @Override
+                    protected void initChannel(Channel ch) throws Exception {
+                        ch.pipeline().addLast(new SimpleChannelInboundHandler() {
+                            @Override
+                            protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+                                System.out.println("hello");
+                            }
+                        });
+                    }
+                })
+                .option(ChannelOption.SO_BACKLOG, 128)
+                .childOption(ChannelOption.SO_KEEPALIVE, true)
+                .bind(8080)
+                .sync()
+                .channel()
+                .closeFuture()
+                .sync();
+    }
+
+    @Test
+    public void demo52() throws InterruptedException {
+        new Bootstrap()
+                .group(new NioEventLoopGroup())
+                .channel(NioSocketChannel.class)
+                .handler(new ChannelInitializer() {
+                    @Override
+                    protected void initChannel(Channel ch) throws Exception {
+                        ch.pipeline().addLast(new SimpleChannelInboundHandler() {
+                            @Override
+                            protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+                                System.out.println("hello i'm client");
+                            }
+                        });
+                    }
+                })
+                .connect("localhost", 8080)
+                .sync()
+                .channel()
+                .closeFuture()
+                .sync();
+    }
+
+    @Test
+    public void demo53() {
+        System.out.println("\"cause\":\"java.lang.NullPointerExceptionntat com.leocool.sgland.service.ToolService$RequestHandler.doGetRolePayInfo(ToolService.java:136)ntat com.leocool.sgland.service.ToolService$RequestHandler.channelRead0(ToolService.java:89)ntat com.leocool.sgland.service.ToolService$RequestHandler.channelRead0(ToolService.java:53)ntat io.netty.channel.SimpleChannelInboundHandler.channelRead(SimpleChannelInboundHandler.java:105)ntat io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:308)ntat io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:294)ntat io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:103)ntat io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:308)ntat io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:294)ntat io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:182)ntat io.netty.channel.CombinedChannelDuplexHandler.channelRead(CombinedChannelDuplexHandler.java:147)ntat io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:308)ntat io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:294)ntat com.leocool.channel.NOXIdleStateHandler.channelRead(NOXIdleStateHandler.java:152)ntat io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:308)ntat io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:294)ntat io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:846)ntat io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:130)ntat io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:511)ntat io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:468)ntat io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:382)ntat io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:354)ntat io.netty.util.concurrent.SingleThreadEventExecutor$2.run(SingleThreadEventExecutor.java:116)ntat io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:137)ntat java.lang.Thread.run(Thread.java:748)n\",\"error\":\"user not found0\"");
+    }
+
+    @Test
+    public void demo54() {
+        try {
+            System.out.println(1 / 0);
+        } catch (Exception e) {
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            Arrays.stream("java.lang.NullPointerExceptionntat com.leocool.sgland.service.ToolService$RequestHandler.doGetRolePayInfo(ToolService.java:136)ntat com.leocool.sgland.service.ToolService$RequestHandler.channelRead0(ToolService.java:89)ntat com.leocool.sgland.service.ToolService$RequestHandler.channelRead0(ToolService.java:53)ntat io.netty.channel.SimpleChannelInboundHandler.channelRead(SimpleChannelInboundHandler.java:105)ntat io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:308)ntat io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:294)ntat io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:103)ntat io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:308)ntat io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:294)ntat io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:182)ntat io.netty.channel.CombinedChannelDuplexHandler.channelRead(CombinedChannelDuplexHandler.java:147)ntat io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:308)ntat io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:294)ntat com.leocool.channel.NOXIdleStateHandler.channelRead(NOXIdleStateHandler.java:152)ntat io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:308)ntat io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:294)ntat io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:846)ntat io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:130)ntat io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:511)ntat io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:468)ntat io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:382)ntat io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:354)ntat io.netty.util.concurrent.SingleThreadEventExecutor$2.run(SingleThreadEventExecutor.java:116)ntat io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:137)ntat java.lang.Thread.run(Thread.java:748)n".split("ntat")).forEach(System.out::println);
+        }
+    }
+
+    @Test
+    public void demo55() {
+        jedis.set("key", "val", "NX", "EX", 20);
+
+    }
+
+    @Test
+    public void demo56() throws InterruptedException {
+        while (true) {
+            System.out.println(jedis.get("key"));
+            Thread.sleep(1000);
+        }
+    }
+
+    public static final String QUEUE_NAME = "helloMQ";
+
+    @Test
+    public void demo57() throws IOException, TimeoutException {
+        ConnectionFactory factory = new ConnectionFactory();
+        factory.setHost("114.116.175.209");
+        try (Connection connection = factory.newConnection();
+             com.rabbitmq.client.Channel channel = connection.createChannel()) {
+            channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+            String message = "hello world";
+            channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
+            System.out.println(" [X] Sent '" + message + "'");
+        }
     }
 
 }
