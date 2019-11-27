@@ -1,0 +1,185 @@
+syntax = "proto2";
+package Rank_pb;
+option java_package = "com.leocool.sgland.protocol";
+option java_outer_classname = "RankMsg";
+
+import "SglMsg_pb.proto";
+import "Data_pb.proto";
+
+message RankData
+{
+    optional Data_pb.UserInfo user_info = 1;
+    optional Data_pb.UnionInfo union_info = 2;
+    optional int32 value = 3;
+    optional int32 rank = 4;
+    optional Data_pb.Team team = 5;
+	optional int32 worship_point = 6;
+	optional int64 worship_time = 7;
+}
+
+message GradeRank
+{
+	optional Data_pb.UserInfo user_info = 1;
+	optional int64 rank = 2;
+	optional int64 score = 3;
+	optional string type = 4;
+}
+
+message GradeRankList
+{
+	repeated GradeRank rank = 1;
+}
+
+message ActivityRankData
+{
+	optional Data_pb.UserInfo user_info =1;
+	optional int64 rank = 2;
+	optional int64 score = 3;
+	optional int64 total_score =4;
+	optional int64 pay_money =5;
+}
+
+message RankListResp
+{
+    optional int64 end_time = 1;
+    repeated RankData data = 2;
+    optional int64 user_id = 3;
+    optional int32 season = 4;
+	optional int64 start_time = 5;
+}
+
+message RankListReq
+{
+    optional int64 end_time = 1;
+    repeated RankData data = 2;
+    optional int64 user_id = 3;
+    optional int32 season = 4;
+	optional int64 start_time = 5;
+}
+
+message RankLists
+{
+    repeated RankListResp ranks = 1;
+}
+
+message RankPreExResp
+{
+    optional int64 user_id = 1;
+    optional int32 trophy = 2;
+    optional bool is_first = 3;
+    repeated int32 period = 4;
+    optional int64 end_time = 5;
+    optional Data_pb.TroopData troop = 6;
+    optional int32 win = 7;
+    optional int32 lose = 8;
+}
+
+message RankPreResp
+{
+    repeated RankListResp ranks = 1;
+    optional int64 user_id = 2;
+    optional int32 pre_rank = 3;
+    optional int32 pre_trophy = 4;
+    optional int32 trophy = 5;
+    optional bool is_first = 6;
+    optional int64 end_time = 7;
+    repeated int32 period = 8;
+    optional int32 ladder_ex_trophy = 9;
+}
+
+message DarkRankListResp
+{
+    optional int64 end_time = 1;
+    repeated RankData data = 2;
+    optional int64 user_id = 3;
+    optional int32 season = 4;
+	optional int64 start_time = 5;
+    optional int32 dark_energy = 6;
+	optional int32 dark_rank = 57;
+}
+
+message DarkRankPreResp
+{
+	optional Data_pb.UserInfo user_info = 1;
+	repeated RankListResp ranks = 2;
+    optional int64 user_id = 3;
+    optional int32 dark_energy = 4;
+	optional int32 pre_dark_rank = 5;
+	optional int64 pre_dark_energy = 6;
+    optional bool is_first = 7;
+    optional int64 end_time = 8;
+    repeated int32 period = 9;
+    optional int32 ladder_ex_trophy = 10;
+	optional string dark_battle_data = 11;
+}
+
+
+message SglRankMsg
+{
+    extend SglMsg_pb.SglReqMsg
+    {
+        optional int32 rank_uboss_req = 1700;
+        optional int32 rank_ladder_req = 1701;
+        optional int32 rank_char_req = 1702;
+        repeated Data_pb.AccountInfo rank_reset_req = 1703;
+        optional TeamKey rank_team_req = 1704;
+		optional RankListReq rank_list_req = 1075;
+		optional int32 anniversary_gold_rank_req = 1076;
+		optional string rose_point_rank_req =1077;
+    }
+    extend SglMsg_pb.SglRespMsg
+    {
+        optional RankListResp rank_list_resp = 1700;
+        optional int32 rank_uboss_resp = 1701;
+        optional RankPreResp rank_pre_resp = 1702;
+        optional int32 rank_ladder_resp = 1703;
+        optional RankPreExResp rank_pre_ex_resp = 1704;
+        optional int32 rank_char_resp = 1705;
+        optional RankLists rank_top_team_mvp_resp = 1706;
+		optional DarkRankListResp dark_rank_list_resp = 1707;
+		optional DarkRankPreResp dark_rank_pre_resp = 1708;
+		repeated ActivityRankData anniversary_rank_list_resp = 1709;
+		optional AnniversaryGoldRank anniversary_gold_rank_resp = 1710;
+		optional RosePointRank rose_point_rank_resp = 1711;
+		optional GradeRankList grade_rank_resp = 1712;
+    }
+}
+message AnniversaryGoldRank
+{
+	optional int32 phase = 1;
+	repeated GoldRank gold_rank = 2;
+	optional MyRank my_rank_data = 3;
+	optional GoldRank winner_user = 4;
+}
+message GoldRank
+{
+	optional int32 rank = 1;
+	optional Data_pb.UserInfo user_info = 2;
+	optional int64 gold_num = 3;
+}
+message MyRank
+{
+	optional int64 my_rank = 1;
+	optional Data_pb.UserInfo user_info = 2;
+	optional int64 gold_num = 3;
+}
+message TeamKey
+{
+    optional int32 rid = 1;
+    optional int64 team_id = 2;
+}
+message RosePointRank
+{
+	repeated RoseRank send_point_rank =1;
+	repeated RoseRank get_point_rank = 2;
+	repeated Data_pb.RoseSendInfo rose_send_list =3;
+	repeated Data_pb.RoseSendInfo rose_get_list =4;
+}
+
+message RoseRank
+{
+	optional int32 rank = 1;
+	optional Data_pb.UserInfo user_info = 2;
+	optional int64 score = 3;
+
+}
