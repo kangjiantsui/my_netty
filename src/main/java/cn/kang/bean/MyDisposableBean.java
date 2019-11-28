@@ -1,10 +1,7 @@
 package cn.kang.bean;
 
 
-import cn.kang.netty.websocket.ProtobufServer;
-import cn.kang.netty.websocket.WebSocketServer;
 import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**

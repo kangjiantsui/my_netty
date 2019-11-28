@@ -1,0 +1,4 @@
+package Chat_pb;
+option java_package = "cn.kang.common.protocol";
+option java_outer_classname = "Chat_pb";
+

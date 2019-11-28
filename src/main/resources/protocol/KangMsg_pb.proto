@@ -1,0 +1,23 @@
+package KangMsg_pb;
+option java_package = "cn.kang.common.protocol";
+option java_outer_classname = "KangMsg_pb";
+
+import "KangMsgType_pb.proto";
+message KangReqMsg {
+    optional KangMsgType_pb.ProtoMsgType type = 1;
+    optional int64 dt = 2;
+    optional int64 user_id = 3;
+    extensions 100 to 10100;
+}
+
+message KangRespMsg {
+    optional KangMsgType_pb.ProtoMsgType type = 1;
+    optional KangMsg_pb.ProtoMsgStatus status = 2;
+    optional string error = 3;
+    optional int64 dt = 4;
+    extensions 100 to 10100;
+}
+
+enum ProtoMsgStatus {
+    PB_STATUS_OK = 0;
+}
