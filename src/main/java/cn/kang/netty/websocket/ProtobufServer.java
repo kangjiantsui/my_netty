@@ -4,8 +4,8 @@ import cn.kang.netty.channel.ServerChannelInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -13,10 +13,8 @@ import java.net.InetSocketAddress;
 
 @Component
 public class ProtobufServer {
-    @Autowired
-    private EventLoopGroup bossGroup;
-    @Autowired
-    private EventLoopGroup workGroup;
+    private EventLoopGroup bossGroup = new NioEventLoopGroup();
+    private EventLoopGroup workGroup = new NioEventLoopGroup();
 
     @Async
     public void run(int port) throws InterruptedException {

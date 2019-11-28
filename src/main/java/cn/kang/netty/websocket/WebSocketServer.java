@@ -5,22 +5,20 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.stream.ChunkedWriteHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
 public class WebSocketServer {
 
-    @Autowired
-    private EventLoopGroup bossGroup;
-    @Autowired
-    private EventLoopGroup workGroup;
+    private EventLoopGroup bossGroup = new NioEventLoopGroup();
+    private EventLoopGroup workGroup = new NioEventLoopGroup();
 
 
     @Async
