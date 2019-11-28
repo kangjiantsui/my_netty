@@ -13,11 +13,6 @@ import org.springframework.stereotype.Component;
 @SuppressWarnings("RedundantThrows")
 @Component
 public class MyDisposableBean implements DisposableBean {
-
-    @Autowired
-    private WebSocketServer webSocketServer;
-    @Autowired
-    private ProtobufServer protobufServer;
     @Override
     public void destroy() throws Exception {
         System.out.println("结束");
