@@ -18,8 +18,7 @@ public class ServerFrameHandler extends SimpleChannelInboundHandler<PersonMessag
 
         Channel channel = ctx.channel();
         log.info(msg.getId()+":"+msg.getName());
-        SglMsg.SglRespMsg.Builder rb = SglMsg.SglRespMsg.newBuilder().setStatus(SglMsg.ProtoMsgStatus.PB_STATUS_OK);
-        channel.writeAndFlush(rb);
+        channel.writeAndFlush(msg);
     }
 
     //每个channel都有一个唯一的id值

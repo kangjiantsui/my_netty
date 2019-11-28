@@ -24,14 +24,20 @@
 
     let socket = new WebSocket("ws://localhost:8899/ws");
     // let socket = new WebSocket("ws://114.116.175.209:8899/ws");
-    socket.onopen = function (event) {
+    socket.onopen = function () {
         console.log('socket开启');
     };
     socket.onclose = function () {
         console.log('socket关闭');
     };
-    socket.onmessage = function () {
-        console.log('接收到服务器返回');
+    socket.onmessage = function (event) {
+        let reader = new FileReader();
+        reader.readAsArrayBuffer(event.data);
+        reader.onload = function (ev) {
+            console.info(reader.result);
+            console.info(proto.Person.deserializeBinary(reader.result));
+        }
+
     };
 
     function send() {
