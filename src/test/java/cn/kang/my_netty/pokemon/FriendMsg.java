@@ -4296,17 +4296,17 @@ public final class FriendMsg {
      */
     long getId();
 
-    // optional string message = 2;
+    // optional string person = 2;
     /**
-     * <code>optional string message = 2;</code>
+     * <code>optional string person = 2;</code>
      */
     boolean hasMessage();
     /**
-     * <code>optional string message = 2;</code>
+     * <code>optional string person = 2;</code>
      */
     java.lang.String getMessage();
     /**
-     * <code>optional string message = 2;</code>
+     * <code>optional string person = 2;</code>
      */
     com.google.protobuf.ByteString
         getMessageBytes();
@@ -4428,17 +4428,17 @@ public final class FriendMsg {
       return id_;
     }
 
-    // optional string message = 2;
+    // optional string person = 2;
     public static final int MESSAGE_FIELD_NUMBER = 2;
     private java.lang.Object message_;
     /**
-     * <code>optional string message = 2;</code>
+     * <code>optional string person = 2;</code>
      */
     public boolean hasMessage() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>optional string message = 2;</code>
+     * <code>optional string person = 2;</code>
      */
     public java.lang.String getMessage() {
       java.lang.Object ref = message_;
@@ -4455,7 +4455,7 @@ public final class FriendMsg {
       }
     }
     /**
-     * <code>optional string message = 2;</code>
+     * <code>optional string person = 2;</code>
      */
     public com.google.protobuf.ByteString
         getMessageBytes() {
@@ -4750,16 +4750,16 @@ public final class FriendMsg {
         return this;
       }
 
-      // optional string message = 2;
+      // optional string person = 2;
       private java.lang.Object message_ = "";
       /**
-       * <code>optional string message = 2;</code>
+       * <code>optional string person = 2;</code>
        */
       public boolean hasMessage() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>optional string message = 2;</code>
+       * <code>optional string person = 2;</code>
        */
       public java.lang.String getMessage() {
         java.lang.Object ref = message_;
@@ -4773,7 +4773,7 @@ public final class FriendMsg {
         }
       }
       /**
-       * <code>optional string message = 2;</code>
+       * <code>optional string person = 2;</code>
        */
       public com.google.protobuf.ByteString
           getMessageBytes() {
@@ -4789,7 +4789,7 @@ public final class FriendMsg {
         }
       }
       /**
-       * <code>optional string message = 2;</code>
+       * <code>optional string person = 2;</code>
        */
       public Builder setMessage(
           java.lang.String value) {
@@ -4802,7 +4802,7 @@ public final class FriendMsg {
         return this;
       }
       /**
-       * <code>optional string message = 2;</code>
+       * <code>optional string person = 2;</code>
        */
       public Builder clearMessage() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -4811,7 +4811,7 @@ public final class FriendMsg {
         return this;
       }
       /**
-       * <code>optional string message = 2;</code>
+       * <code>optional string person = 2;</code>
        */
       public Builder setMessageBytes(
           com.google.protobuf.ByteString value) {

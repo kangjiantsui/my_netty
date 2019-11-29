@@ -30096,7 +30096,7 @@ window.__require = function e(t, n, a) {
                                 this._content = _.lcStr(o.STR.UNION_IMPEACHED_NEWS), this._clr = l.UICfg.COLOR_TEXT_RED_DARK;
                                 break;
                             default:
-                                this._content = p("message"), null == this._content && (this._content = "")
+                                this._content = p("person"), null == this._content && (this._content = "")
                         }
                     } else if (t == SglMsgType_pb.ProtoMsgType.PB_TYPE_NEWS) {
                         this._user = a.User.create(e.user1), this._type = i.Data.MsgType.bulletin, null != e.user2 && (this._target = a.User.create(e.user2)), this._items = [];

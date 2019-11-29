@@ -14,17 +14,20 @@
 </body>
 <!--<script src="../static/js/proto/awesome.js" ></script>-->
 <script th:src="@{/static/js/proto/awesome.js}"></script>
-<script th:src="@{/static/js/proto/chat_msg.js}"></script>
-<script th:src="@{/static/js/proto/kang_msg.js}"></script>
-<script th:src="@{/static/js/proto/kang_msg_type.js}"></script>
-<script th:src="@{/static/js/proto/user_msg.js}"></script>
+<!--<script th:src="@{/static/js/proto/kang_msg_type.js}"></script>-->
+<!--<script th:src="@{/static/js/proto/kang_msg.js}"></script>-->
+<!--<script th:src="@{/static/js/proto/user_msg.js}"></script>-->
+<!--<script th:src="@{/static/js/proto/chat_msg.js}"></script>-->
 <script type="text/javascript">
-    let message = new proto.Person();
-    message.setId(234);
-    message.setName('老王');
+    let person = new proto.Person();
+    person.setId(234);
+    person.setName('老王');
 
-    let bytes = message.serializeBinary();
-    console.log(message);
+    let kangReqMsg = new proto.KangMsg_pb.KangReqMsg();
+    kangReqMsg.setType(proto.KangMsgType_pb.ProtoMsgType.PB_TYPE_CONNECTED);
+
+    let bytes = person.serializeBinary();
+    console.log(person);
 
     let socket = new WebSocket("ws://localhost:8899/ws");
     // let socket = new WebSocket("ws://114.116.175.209:8899/ws");
@@ -47,7 +50,7 @@
     function send() {
         if (socket.readyState === WebSocket.OPEN) {
             console.log('发送消息');
-            socket.send(message.serializeBinary());
+            socket.send(person.serializeBinary());
         } else {
             console.log('还没开')
         }

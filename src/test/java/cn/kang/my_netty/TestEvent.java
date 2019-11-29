@@ -5,7 +5,7 @@ public class TestEvent {
 
     TestEvent(int message) {
         this.message = message;
-        System.out.println("event message:" + message);
+        System.out.println("event person:" + message);
     }
 
     public int getMessage() {

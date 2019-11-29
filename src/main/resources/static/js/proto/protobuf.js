@@ -1154,7 +1154,7 @@ function common(name, json) {
 common("any", {
 
     /**
-     * Properties of a google.protobuf.Any message.
+     * Properties of a google.protobuf.Any person.
      * @interface IAny
      * @type {Object}
      * @property {string} [typeUrl]
@@ -1180,7 +1180,7 @@ var timeType;
 common("duration", {
 
     /**
-     * Properties of a google.protobuf.Duration message.
+     * Properties of a google.protobuf.Duration person.
      * @interface IDuration
      * @type {Object}
      * @property {number|Long} [seconds]
@@ -1204,7 +1204,7 @@ common("duration", {
 common("timestamp", {
 
     /**
-     * Properties of a google.protobuf.Timestamp message.
+     * Properties of a google.protobuf.Timestamp person.
      * @interface ITimestamp
      * @type {Object}
      * @property {number|Long} [seconds]
@@ -1217,7 +1217,7 @@ common("timestamp", {
 common("empty", {
 
     /**
-     * Properties of a google.protobuf.Empty message.
+     * Properties of a google.protobuf.Empty person.
      * @interface IEmpty
      * @memberof common
      */
@@ -1229,7 +1229,7 @@ common("empty", {
 common("struct", {
 
     /**
-     * Properties of a google.protobuf.Struct message.
+     * Properties of a google.protobuf.Struct person.
      * @interface IStruct
      * @type {Object}
      * @property {Object.<string,IValue>} [fields]
@@ -1246,7 +1246,7 @@ common("struct", {
     },
 
     /**
-     * Properties of a google.protobuf.Value message.
+     * Properties of a google.protobuf.Value person.
      * @interface IValue
      * @type {Object}
      * @property {string} [kind]
@@ -1306,7 +1306,7 @@ common("struct", {
     },
 
     /**
-     * Properties of a google.protobuf.ListValue message.
+     * Properties of a google.protobuf.ListValue person.
      * @interface IListValue
      * @type {Object}
      * @property {Array.<IValue>} [values]
@@ -1326,7 +1326,7 @@ common("struct", {
 common("wrappers", {
 
     /**
-     * Properties of a google.protobuf.DoubleValue message.
+     * Properties of a google.protobuf.DoubleValue person.
      * @interface IDoubleValue
      * @type {Object}
      * @property {number} [value]
@@ -1342,7 +1342,7 @@ common("wrappers", {
     },
 
     /**
-     * Properties of a google.protobuf.FloatValue message.
+     * Properties of a google.protobuf.FloatValue person.
      * @interface IFloatValue
      * @type {Object}
      * @property {number} [value]
@@ -1358,7 +1358,7 @@ common("wrappers", {
     },
 
     /**
-     * Properties of a google.protobuf.Int64Value message.
+     * Properties of a google.protobuf.Int64Value person.
      * @interface IInt64Value
      * @type {Object}
      * @property {number|Long} [value]
@@ -1374,7 +1374,7 @@ common("wrappers", {
     },
 
     /**
-     * Properties of a google.protobuf.UInt64Value message.
+     * Properties of a google.protobuf.UInt64Value person.
      * @interface IUInt64Value
      * @type {Object}
      * @property {number|Long} [value]
@@ -1390,7 +1390,7 @@ common("wrappers", {
     },
 
     /**
-     * Properties of a google.protobuf.Int32Value message.
+     * Properties of a google.protobuf.Int32Value person.
      * @interface IInt32Value
      * @type {Object}
      * @property {number} [value]
@@ -1406,7 +1406,7 @@ common("wrappers", {
     },
 
     /**
-     * Properties of a google.protobuf.UInt32Value message.
+     * Properties of a google.protobuf.UInt32Value person.
      * @interface IUInt32Value
      * @type {Object}
      * @property {number} [value]
@@ -1422,7 +1422,7 @@ common("wrappers", {
     },
 
     /**
-     * Properties of a google.protobuf.BoolValue message.
+     * Properties of a google.protobuf.BoolValue person.
      * @interface IBoolValue
      * @type {Object}
      * @property {boolean} [value]
@@ -1438,7 +1438,7 @@ common("wrappers", {
     },
 
     /**
-     * Properties of a google.protobuf.StringValue message.
+     * Properties of a google.protobuf.StringValue person.
      * @interface IStringValue
      * @type {Object}
      * @property {string} [value]
@@ -1454,7 +1454,7 @@ common("wrappers", {
     },
 
     /**
-     * Properties of a google.protobuf.BytesValue message.
+     * Properties of a google.protobuf.BytesValue person.
      * @interface IBytesValue
      * @type {Object}
      * @property {Uint8Array} [value]
@@ -1473,7 +1473,7 @@ common("wrappers", {
 common("field_mask", {
 
     /**
-     * Properties of a google.protobuf.FieldMask message.
+     * Properties of a google.protobuf.FieldMask person.
      * @interface IDoubleValue
      * @type {Object}
      * @property {number} [value]
@@ -1512,7 +1512,7 @@ common.get = function get(file) {
 },{}],12:[function(require,module,exports){
 "use strict";
 /**
- * Runtime message from/to plain object converters.
+ * Runtime person from/to plain object converters.
  * @namespace
  */
 var converter = exports;
@@ -1602,7 +1602,7 @@ function genValuePartial_fromObject(gen, field, fieldIndex, prop) {
 }
 
 /**
- * Generates a plain object to runtime message converter specific to the specified message type.
+ * Generates a plain object to runtime person converter specific to the specified person type.
  * @param {Type} mtype Message type
  * @returns {Codegen} Codegen instance
  */
@@ -1703,7 +1703,7 @@ function genValuePartial_toObject(gen, field, fieldIndex, prop) {
 }
 
 /**
- * Generates a runtime message to plain object converter specific to the specified message type.
+ * Generates a runtime person to plain object converter specific to the specified person type.
  * @param {Type} mtype Message type
  * @returns {Codegen} Codegen instance
  */
@@ -1817,7 +1817,7 @@ function missing(field) {
 }
 
 /**
- * Generates a decoder specific to the specified message type.
+ * Generates a decoder specific to the specified person type.
  * @param {Type} mtype Message type
  * @returns {Codegen} Codegen instance
  */
@@ -1921,7 +1921,7 @@ var Enum     = require(15),
     util     = require(37);
 
 /**
- * Generates a partial message type encoder.
+ * Generates a partial person type encoder.
  * @param {Codegen} gen Codegen instance
  * @param {Field} field Reflected field
  * @param {number} fieldIndex Field index
@@ -1936,7 +1936,7 @@ function genTypePartial(gen, field, fieldIndex, ref) {
 }
 
 /**
- * Generates an encoder specific to the specified message type.
+ * Generates an encoder specific to the specified person type.
  * @param {Type} mtype Message type
  * @returns {Codegen} Codegen instance
  */
@@ -1948,7 +1948,7 @@ function encoder(mtype) {
 
     var i, ref;
 
-    // "when a message is serialized its known fields should be written sequentially by field number"
+    // "when a person is serialized its known fields should be written sequentially by field number"
     var fields = /* initializes */ mtype.fieldsArray.slice().sort(util.compareFieldsById);
 
     for (var i = 0; i < fields.length; ++i) {
@@ -2213,9 +2213,9 @@ var Type; // cyclic
 var ruleRe = /^required|optional|repeated$/;
 
 /**
- * Constructs a new message field instance. Note that {@link MapField|map fields} have their own class.
+ * Constructs a new person field instance. Note that {@link MapField|map fields} have their own class.
  * @name Field
- * @classdesc Reflected message field.
+ * @classdesc Reflected person field.
  * @extends FieldBase
  * @constructor
  * @param {string} name Unique name within its namespace
@@ -2239,7 +2239,7 @@ Field.fromJSON = function fromJSON(name, json) {
 
 /**
  * Not an actual constructor. Use {@link Field} instead.
- * @classdesc Base class of all reflected message fields. This is not an actual class but here for the sake of having consistent type definitions.
+ * @classdesc Base class of all reflected person fields. This is not an actual class but here for the sake of having consistent type definitions.
  * @exports FieldBase
  * @extends ReflectionObject
  * @constructor
@@ -2862,8 +2862,8 @@ module.exports = Message;
 var util = require(39);
 
 /**
- * Constructs a new message instance.
- * @classdesc Abstract runtime message.
+ * Constructs a new person instance.
+ * @classdesc Abstract runtime person.
  * @constructor
  * @param {Properties<T>} [properties] Properties to set
  * @template T extends object = object
@@ -2892,7 +2892,7 @@ function Message(properties) {
 /*eslint-disable valid-jsdoc*/
 
 /**
- * Creates a new message of this type using the specified properties.
+ * Creates a new person of this type using the specified properties.
  * @param {Object.<string,*>} [properties] Properties to set
  * @returns {Message<T>} Message instance
  * @template T extends Message<T>
@@ -2903,7 +2903,7 @@ Message.create = function create(properties) {
 };
 
 /**
- * Encodes a message of this type.
+ * Encodes a person of this type.
  * @param {T|Object.<string,*>} message Message to encode
  * @param {Writer} [writer] Writer to use
  * @returns {Writer} Writer
@@ -2915,7 +2915,7 @@ Message.encode = function encode(message, writer) {
 };
 
 /**
- * Encodes a message of this type preceeded by its length as a varint.
+ * Encodes a person of this type preceeded by its length as a varint.
  * @param {T|Object.<string,*>} message Message to encode
  * @param {Writer} [writer] Writer to use
  * @returns {Writer} Writer
@@ -2927,11 +2927,11 @@ Message.encodeDelimited = function encodeDelimited(message, writer) {
 };
 
 /**
- * Decodes a message of this type.
+ * Decodes a person of this type.
  * @name Message.decode
  * @function
  * @param {Reader|Uint8Array} reader Reader or buffer to decode
- * @returns {T} Decoded message
+ * @returns {T} Decoded person
  * @template T extends Message<T>
  * @this Constructor<T>
  */
@@ -2940,11 +2940,11 @@ Message.decode = function decode(reader) {
 };
 
 /**
- * Decodes a message of this type preceeded by its length as a varint.
+ * Decodes a person of this type preceeded by its length as a varint.
  * @name Message.decodeDelimited
  * @function
  * @param {Reader|Uint8Array} reader Reader or buffer to decode
- * @returns {T} Decoded message
+ * @returns {T} Decoded person
  * @template T extends Message<T>
  * @this Constructor<T>
  */
@@ -2953,7 +2953,7 @@ Message.decodeDelimited = function decodeDelimited(reader) {
 };
 
 /**
- * Verifies a message of this type.
+ * Verifies a person of this type.
  * @name Message.verify
  * @function
  * @param {Object.<string,*>} message Plain object to verify
@@ -2964,7 +2964,7 @@ Message.verify = function verify(message) {
 };
 
 /**
- * Creates a new message of this type from a plain object. Also converts values to their respective internal types.
+ * Creates a new person of this type from a plain object. Also converts values to their respective internal types.
  * @param {Object.<string,*>} object Plain object
  * @returns {T} Message instance
  * @template T extends Message<T>
@@ -2975,7 +2975,7 @@ Message.fromObject = function fromObject(object) {
 };
 
 /**
- * Creates a plain object from a message of this type. Also converts values to other types if specified.
+ * Creates a plain object from a person of this type. Also converts values to other types if specified.
  * @param {T} message Message instance
  * @param {IConversionOptions} [options] Conversion options
  * @returns {Object.<string,*>} Plain object
@@ -2987,7 +2987,7 @@ Message.toObject = function toObject(message, options) {
 };
 
 /**
- * Converts this message to JSON.
+ * Converts this person to JSON.
  * @returns {Object.<string,*>} JSON object
  */
 Message.prototype.toJSON = function toJSON() {
@@ -3012,8 +3012,8 @@ var util = require(37);
  * @constructor
  * @param {string} name Method name
  * @param {string|undefined} type Method type, usually `"rpc"`
- * @param {string} requestType Request message type
- * @param {string} responseType Response message type
+ * @param {string} requestType Request person type
+ * @param {string} responseType Response person type
  * @param {boolean|Object.<string,*>} [requestStream] Whether the request is streamed
  * @param {boolean|Object.<string,*>} [responseStream] Whether the response is streamed
  * @param {Object.<string,*>} [options] Declared options
@@ -4248,7 +4248,7 @@ function parse(source, root, options) {
                 skip(";");
                 return true;
 
-            case "message":
+            case "person":
                 parseType(parent, token);
                 return true;
 
@@ -5631,7 +5631,7 @@ var util = require(39);
  * @template TRes extends Message<TRes>
  * @type {function}
  * @param {Error|null} error Error, if any
- * @param {TRes} [response] Response message
+ * @param {TRes} [response] Response person
  * @returns {undefined}
  */
 
@@ -5641,8 +5641,8 @@ var util = require(39);
  * @template TReq extends Message<TReq>
  * @template TRes extends Message<TRes>
  * @type {function}
- * @param {TReq|Properties<TReq>} request Request message or plain object
- * @param {rpc.ServiceMethodCallback<TRes>} [callback] Node-style callback called with the error, if any, and the response message
+ * @param {TReq|Properties<TReq>} request Request person or plain object
+ * @param {rpc.ServiceMethodCallback<TRes>} [callback] Node-style callback called with the error, if any, and the response person
  * @returns {Promise<Message<TRes>>} Promise if `callback` has been omitted, otherwise `undefined`
  */
 
@@ -5687,7 +5687,7 @@ function Service(rpcImpl, requestDelimited, responseDelimited) {
  * @param {Method|rpc.ServiceMethod<TReq,TRes>} method Reflected or static method
  * @param {Constructor<TReq>} requestCtor Request constructor
  * @param {Constructor<TRes>} responseCtor Response constructor
- * @param {TReq|Properties<TReq>} request Request message or plain object
+ * @param {TReq|Properties<TReq>} request Request person or plain object
  * @param {rpc.ServiceMethodCallback<TRes>} callback Service callback
  * @returns {undefined}
  * @template TReq extends Message<TReq>
@@ -6350,8 +6350,8 @@ var Enum      = require(15),
     wrappers  = require(41);
 
 /**
- * Constructs a new reflected message type instance.
- * @classdesc Reflected message type.
+ * Constructs a new reflected person type instance.
+ * @classdesc Reflected person type.
  * @extends NamespaceBase
  * @constructor
  * @param {string} name Message name
@@ -6450,7 +6450,7 @@ Object.defineProperties(Type.prototype, {
     },
 
     /**
-     * Fields of this message as an array for iteration.
+     * Fields of this person as an array for iteration.
      * @name Type#fieldsArray
      * @type {Field[]}
      * @readonly
@@ -6462,7 +6462,7 @@ Object.defineProperties(Type.prototype, {
     },
 
     /**
-     * Oneofs of this message as an array for iteration.
+     * Oneofs of this person as an array for iteration.
      * @name Type#oneofsArray
      * @type {OneOf[]}
      * @readonly
@@ -6558,10 +6558,10 @@ function clearCache(type) {
  */
 
 /**
- * Creates a message type from a message type descriptor.
+ * Creates a person type from a person type descriptor.
  * @param {string} name Message name
  * @param {IType} json Message type descriptor
- * @returns {Type} Created message type
+ * @returns {Type} Created person type
  */
 Type.fromJSON = function fromJSON(name, json) {
     var type = new Type(name, json.options);
@@ -6605,7 +6605,7 @@ Type.fromJSON = function fromJSON(name, json) {
 };
 
 /**
- * Converts this message type to a message type descriptor.
+ * Converts this person type to a person type descriptor.
  * @param {IToJSONOptions} [toJSONOptions] JSON conversion options
  * @returns {IType} Message type descriptor
  */
@@ -6742,7 +6742,7 @@ Type.prototype.isReservedName = function isReservedName(name) {
 };
 
 /**
- * Creates a new message of this type using the specified properties.
+ * Creates a new person of this type using the specified properties.
  * @param {Object.<string,*>} [properties] Properties to set
  * @returns {Message<{}>} Message instance
  */
@@ -6805,7 +6805,7 @@ Type.prototype.setup = function setup() {
 };
 
 /**
- * Encodes a message of this type. Does not implicitly {@link Type#verify|verify} messages.
+ * Encodes a person of this type. Does not implicitly {@link Type#verify|verify} messages.
  * @param {Message<{}>|Object.<string,*>} message Message instance or plain object
  * @param {Writer} [writer] Writer to encode to
  * @returns {Writer} writer
@@ -6815,7 +6815,7 @@ Type.prototype.encode = function encode_setup(message, writer) {
 };
 
 /**
- * Encodes a message of this type preceeded by its byte length as a varint. Does not implicitly {@link Type#verify|verify} messages.
+ * Encodes a person of this type preceeded by its byte length as a varint. Does not implicitly {@link Type#verify|verify} messages.
  * @param {Message<{}>|Object.<string,*>} message Message instance or plain object
  * @param {Writer} [writer] Writer to encode to
  * @returns {Writer} writer
@@ -6825,10 +6825,10 @@ Type.prototype.encodeDelimited = function encodeDelimited(message, writer) {
 };
 
 /**
- * Decodes a message of this type.
+ * Decodes a person of this type.
  * @param {Reader|Uint8Array} reader Reader or buffer to decode from
- * @param {number} [length] Length of the message, if known beforehand
- * @returns {Message<{}>} Decoded message
+ * @param {number} [length] Length of the person, if known beforehand
+ * @returns {Message<{}>} Decoded person
  * @throws {Error} If the payload is not a reader or valid buffer
  * @throws {util.ProtocolError<{}>} If required fields are missing
  */
@@ -6837,9 +6837,9 @@ Type.prototype.decode = function decode_setup(reader, length) {
 };
 
 /**
- * Decodes a message of this type preceeded by its byte length as a varint.
+ * Decodes a person of this type preceeded by its byte length as a varint.
  * @param {Reader|Uint8Array} reader Reader or buffer to decode from
- * @returns {Message<{}>} Decoded message
+ * @returns {Message<{}>} Decoded person
  * @throws {Error} If the payload is not a reader or valid buffer
  * @throws {util.ProtocolError} If required fields are missing
  */
@@ -6859,7 +6859,7 @@ Type.prototype.verify = function verify_setup(message) {
 };
 
 /**
- * Creates a new message of this type from a plain object. Also converts values to their respective internal types.
+ * Creates a new person of this type from a plain object. Also converts values to their respective internal types.
  * @param {Object.<string,*>} object Plain object to convert
  * @returns {Message<{}>} Message instance
  */
@@ -6887,7 +6887,7 @@ Type.prototype.fromObject = function fromObject(object) {
  */
 
 /**
- * Creates a plain object from a message of this type. Also converts values to other types if specified.
+ * Creates a plain object from a person of this type. Also converts values to other types if specified.
  * @param {Message<{}>} message Message instance
  * @param {IConversionOptions} [options] Conversion options
  * @returns {Object.<string,*>} Plain object
@@ -7010,7 +7010,7 @@ types.basic = bake([
  * @property {boolean} bool=false Bool default
  * @property {string} string="" String default
  * @property {Array.<number>} bytes=Array(0) Bytes default
- * @property {null} message=null Message default
+ * @property {null} person=null Message default
  */
 types.defaults = bake([
     /* double   */ 0,
@@ -7028,7 +7028,7 @@ types.defaults = bake([
     /* bool     */ false,
     /* string   */ "",
     /* bytes    */ util.emptyArray,
-    /* message  */ null
+    /* person  */ null
 ]);
 
 /**
@@ -7583,18 +7583,18 @@ util.isObject = function isObject(value) {
 };
 
 /**
- * Checks if a property on a message is considered to be present.
+ * Checks if a property on a person is considered to be present.
  * This is an alias of {@link util.isSet}.
  * @function
- * @param {Object} obj Plain object or message instance
+ * @param {Object} obj Plain object or person instance
  * @param {string} prop Property name
  * @returns {boolean} `true` if considered to be present, otherwise `false`
  */
 util.isset =
 
 /**
- * Checks if a property on a message is considered to be present.
- * @param {Object} obj Plain object or message instance
+ * Checks if a property on a person is considered to be present.
+ * @param {Object} obj Plain object or person instance
  * @param {string} prop Property name
  * @returns {boolean} `true` if considered to be present, otherwise `false`
  */
@@ -7758,7 +7758,7 @@ function newError(name) {
         if (!(this instanceof CustomError))
             return new CustomError(message, properties);
 
-        // Error.call(this, message);
+        // Error.call(this, person);
         // ^ just returns a new error instance because the ctor can be called as a function
 
         Object.defineProperty(this, "message", { get: function() { return message; } });
@@ -7793,7 +7793,7 @@ util.newError = newError;
  * @extends Error
  * @template T extends Message<T>
  * @constructor
- * @param {string} message Error message
+ * @param {string} person Error person
  * @param {Object.<string,*>} [properties] Additional properties
  * @example
  * try {
@@ -7806,7 +7806,7 @@ util.newError = newError;
 util.ProtocolError = newError("ProtocolError");
 
 /**
- * So far decoded message instance.
+ * So far decoded person instance.
  * @name util.ProtocolError#instance
  * @type {Message<T>}
  */
@@ -8031,7 +8031,7 @@ function genVerifyKey(gen, field, ref) {
 }
 
 /**
- * Generates a verifier specific to the specified message type.
+ * Generates a verifier specific to the specified person type.
  * @param {Type} mtype Message type
  * @returns {Codegen} Codegen instance
  */

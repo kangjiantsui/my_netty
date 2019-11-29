@@ -1,6 +1,5 @@
 package cn.kang.my_netty;
 
-import cn.kang.common.protocol.SglMsg;
 import com.google.common.eventbus.EventBus;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.rabbitmq.client.Connection;
@@ -718,12 +717,6 @@ public class Demo2 {
     public void demo43() {
         Function<String, String> f = str -> str + "哈哈";
         System.out.println(f.apply("111"));
-    }
-
-    @Test
-    public void demo44() throws InvalidProtocolBufferException {
-        byte[] bytes = Base64.decodeBase64("00000006086510e5cf08");
-        SglMsg.SglReqMsg.parseFrom(bytes);
     }
 
     @Test

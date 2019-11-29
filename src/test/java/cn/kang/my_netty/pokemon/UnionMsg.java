@@ -10124,17 +10124,17 @@ public final class UnionMsg {
      */
     long getId();
 
-    // optional string message = 2;
+    // optional string person = 2;
     /**
-     * <code>optional string message = 2;</code>
+     * <code>optional string person = 2;</code>
      */
     boolean hasMessage();
     /**
-     * <code>optional string message = 2;</code>
+     * <code>optional string person = 2;</code>
      */
     java.lang.String getMessage();
     /**
-     * <code>optional string message = 2;</code>
+     * <code>optional string person = 2;</code>
      */
     com.google.protobuf.ByteString
         getMessageBytes();
@@ -10256,17 +10256,17 @@ public final class UnionMsg {
       return id_;
     }
 
-    // optional string message = 2;
+    // optional string person = 2;
     public static final int MESSAGE_FIELD_NUMBER = 2;
     private java.lang.Object message_;
     /**
-     * <code>optional string message = 2;</code>
+     * <code>optional string person = 2;</code>
      */
     public boolean hasMessage() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>optional string message = 2;</code>
+     * <code>optional string person = 2;</code>
      */
     public java.lang.String getMessage() {
       java.lang.Object ref = message_;
@@ -10283,7 +10283,7 @@ public final class UnionMsg {
       }
     }
     /**
-     * <code>optional string message = 2;</code>
+     * <code>optional string person = 2;</code>
      */
     public com.google.protobuf.ByteString
         getMessageBytes() {
@@ -10578,16 +10578,16 @@ public final class UnionMsg {
         return this;
       }
 
-      // optional string message = 2;
+      // optional string person = 2;
       private java.lang.Object message_ = "";
       /**
-       * <code>optional string message = 2;</code>
+       * <code>optional string person = 2;</code>
        */
       public boolean hasMessage() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>optional string message = 2;</code>
+       * <code>optional string person = 2;</code>
        */
       public java.lang.String getMessage() {
         java.lang.Object ref = message_;
@@ -10601,7 +10601,7 @@ public final class UnionMsg {
         }
       }
       /**
-       * <code>optional string message = 2;</code>
+       * <code>optional string person = 2;</code>
        */
       public com.google.protobuf.ByteString
           getMessageBytes() {
@@ -10617,7 +10617,7 @@ public final class UnionMsg {
         }
       }
       /**
-       * <code>optional string message = 2;</code>
+       * <code>optional string person = 2;</code>
        */
       public Builder setMessage(
           java.lang.String value) {
@@ -10630,7 +10630,7 @@ public final class UnionMsg {
         return this;
       }
       /**
-       * <code>optional string message = 2;</code>
+       * <code>optional string person = 2;</code>
        */
       public Builder clearMessage() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -10639,7 +10639,7 @@ public final class UnionMsg {
         return this;
       }
       /**
-       * <code>optional string message = 2;</code>
+       * <code>optional string person = 2;</code>
        */
       public Builder setMessageBytes(
           com.google.protobuf.ByteString value) {
@@ -27842,17 +27842,17 @@ public final class UnionMsg {
      */
     long getId();
 
-    // optional string message = 2;
+    // optional string person = 2;
     /**
-     * <code>optional string message = 2;</code>
+     * <code>optional string person = 2;</code>
      */
     boolean hasMessage();
     /**
-     * <code>optional string message = 2;</code>
+     * <code>optional string person = 2;</code>
      */
     java.lang.String getMessage();
     /**
-     * <code>optional string message = 2;</code>
+     * <code>optional string person = 2;</code>
      */
     com.google.protobuf.ByteString
         getMessageBytes();
@@ -27974,17 +27974,17 @@ public final class UnionMsg {
       return id_;
     }
 
-    // optional string message = 2;
+    // optional string person = 2;
     public static final int MESSAGE_FIELD_NUMBER = 2;
     private java.lang.Object message_;
     /**
-     * <code>optional string message = 2;</code>
+     * <code>optional string person = 2;</code>
      */
     public boolean hasMessage() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>optional string message = 2;</code>
+     * <code>optional string person = 2;</code>
      */
     public java.lang.String getMessage() {
       java.lang.Object ref = message_;
@@ -28001,7 +28001,7 @@ public final class UnionMsg {
       }
     }
     /**
-     * <code>optional string message = 2;</code>
+     * <code>optional string person = 2;</code>
      */
     public com.google.protobuf.ByteString
         getMessageBytes() {
@@ -28296,16 +28296,16 @@ public final class UnionMsg {
         return this;
       }
 
-      // optional string message = 2;
+      // optional string person = 2;
       private java.lang.Object message_ = "";
       /**
-       * <code>optional string message = 2;</code>
+       * <code>optional string person = 2;</code>
        */
       public boolean hasMessage() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>optional string message = 2;</code>
+       * <code>optional string person = 2;</code>
        */
       public java.lang.String getMessage() {
         java.lang.Object ref = message_;
@@ -28319,7 +28319,7 @@ public final class UnionMsg {
         }
       }
       /**
-       * <code>optional string message = 2;</code>
+       * <code>optional string person = 2;</code>
        */
       public com.google.protobuf.ByteString
           getMessageBytes() {
@@ -28335,7 +28335,7 @@ public final class UnionMsg {
         }
       }
       /**
-       * <code>optional string message = 2;</code>
+       * <code>optional string person = 2;</code>
        */
       public Builder setMessage(
           java.lang.String value) {
@@ -28348,7 +28348,7 @@ public final class UnionMsg {
         return this;
       }
       /**
-       * <code>optional string message = 2;</code>
+       * <code>optional string person = 2;</code>
        */
       public Builder clearMessage() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -28357,7 +28357,7 @@ public final class UnionMsg {
         return this;
       }
       /**
-       * <code>optional string message = 2;</code>
+       * <code>optional string person = 2;</code>
        */
       public Builder setMessageBytes(
           com.google.protobuf.ByteString value) {
@@ -29484,17 +29484,17 @@ public final class UnionMsg {
      */
     com.leocool.sgland.protocol.Data.UserInfoOrBuilder getUser1OrBuilder();
 
-    // optional string message = 3;
+    // optional string person = 3;
     /**
-     * <code>optional string message = 3;</code>
+     * <code>optional string person = 3;</code>
      */
     boolean hasMessage();
     /**
-     * <code>optional string message = 3;</code>
+     * <code>optional string person = 3;</code>
      */
     java.lang.String getMessage();
     /**
-     * <code>optional string message = 3;</code>
+     * <code>optional string person = 3;</code>
      */
     com.google.protobuf.ByteString
         getMessageBytes();
@@ -29792,17 +29792,17 @@ public final class UnionMsg {
       return user1_;
     }
 
-    // optional string message = 3;
+    // optional string person = 3;
     public static final int MESSAGE_FIELD_NUMBER = 3;
     private java.lang.Object message_;
     /**
-     * <code>optional string message = 3;</code>
+     * <code>optional string person = 3;</code>
      */
     public boolean hasMessage() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
-     * <code>optional string message = 3;</code>
+     * <code>optional string person = 3;</code>
      */
     public java.lang.String getMessage() {
       java.lang.Object ref = message_;
@@ -29819,7 +29819,7 @@ public final class UnionMsg {
       }
     }
     /**
-     * <code>optional string message = 3;</code>
+     * <code>optional string person = 3;</code>
      */
     public com.google.protobuf.ByteString
         getMessageBytes() {
@@ -30541,16 +30541,16 @@ public final class UnionMsg {
         return user1Builder_;
       }
 
-      // optional string message = 3;
+      // optional string person = 3;
       private java.lang.Object message_ = "";
       /**
-       * <code>optional string message = 3;</code>
+       * <code>optional string person = 3;</code>
        */
       public boolean hasMessage() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
-       * <code>optional string message = 3;</code>
+       * <code>optional string person = 3;</code>
        */
       public java.lang.String getMessage() {
         java.lang.Object ref = message_;
@@ -30564,7 +30564,7 @@ public final class UnionMsg {
         }
       }
       /**
-       * <code>optional string message = 3;</code>
+       * <code>optional string person = 3;</code>
        */
       public com.google.protobuf.ByteString
           getMessageBytes() {
@@ -30580,7 +30580,7 @@ public final class UnionMsg {
         }
       }
       /**
-       * <code>optional string message = 3;</code>
+       * <code>optional string person = 3;</code>
        */
       public Builder setMessage(
           java.lang.String value) {
@@ -30593,7 +30593,7 @@ public final class UnionMsg {
         return this;
       }
       /**
-       * <code>optional string message = 3;</code>
+       * <code>optional string person = 3;</code>
        */
       public Builder clearMessage() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -30602,7 +30602,7 @@ public final class UnionMsg {
         return this;
       }
       /**
-       * <code>optional string message = 3;</code>
+       * <code>optional string person = 3;</code>
        */
       public Builder setMessageBytes(
           com.google.protobuf.ByteString value) {

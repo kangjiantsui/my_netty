@@ -1,41 +1,38 @@
 package cn.kang.netty.channel;
 
 import cn.kang.common.protocol.PersonMessage;
+import cn.kang.common.protocol.UserMsg;
 import cn.kang.netty.handler.ServerFrameHandler;
-import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.ExtensionRegistry;
 import com.google.protobuf.MessageLite;
 import com.google.protobuf.MessageLiteOrBuilder;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
-import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.MessageToMessageDecoder;
 import io.netty.handler.codec.MessageToMessageEncoder;
-import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
-import io.netty.handler.codec.http.websocketx.*;
+import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
+import io.netty.handler.codec.http.websocketx.WebSocketFrame;
+import io.netty.handler.codec.http.websocketx.WebSocketServerHandshaker;
+import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.stream.ChunkedWriteHandler;
-import io.netty.util.ReferenceCountUtil;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static io.netty.buffer.Unpooled.wrappedBuffer;
 
 /**
  * 可以同时处理http和websocket请求的channel
  */
-@SuppressWarnings("RedundantThrows")
 public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> {
-    private static AtomicInteger connectNum = new AtomicInteger(0);
 
     private WebSocketServerHandshaker handshaker;
 
@@ -149,5 +146,27 @@ public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> 
         pipeline.addLast(new ServerFrameHandler());
 
 
+    }
+
+    public static class MyDecoder extends ProtobufDecoder {
+
+        public MyDecoder(MessageLite prototype, ExtensionRegistry extensionRegistry) {
+            super(prototype, extensionRegistry);
+        }
+
+        @Override
+        protected void decode(ChannelHandlerContext arg0, ByteBuf arg1, List<Object> arg2) throws Exception {
+            try {
+                super.decode(arg0, arg1, arg2);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        private static ExtensionRegistry getExtensionRegistery() {
+            ExtensionRegistry er = ExtensionRegistry.newInstance();
+            UserMsg.registerAllExtensions(er);
+            return er;
+        }
     }
 }

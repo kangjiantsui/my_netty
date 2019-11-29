@@ -28,15 +28,15 @@ public class ServerFrameHandler extends SimpleChannelInboundHandler<PersonMessag
     //每个channel都有一个唯一的id值
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) {
-        Channel incoming = ctx.channel();
-        for (Channel channel : channels) {
-            channel.writeAndFlush("[SERVER] - " + incoming.remoteAddress() + " 加入\n");
-        }
-        PersonMessage.Person.newBuilder().set
-        channels.forEach(channel -> {
-            channel.writeAndFlush()
-        });
-        channels.add(ctx.channel());
+//        Channel incoming = ctx.channel();
+//        for (Channel channel : channels) {
+//            channel.writeAndFlush("[SERVER] - " + incoming.remoteAddress() + " 加入\n");
+//        }
+//        PersonMessage.Person.newBuilder().set
+//        channels.forEach(channel -> {
+//            channel.writeAndFlush()
+//        });
+//        channels.add(ctx.channel());
     }
 
     @Override

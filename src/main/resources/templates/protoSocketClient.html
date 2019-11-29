@@ -95,7 +95,7 @@
                 }
                 return;
             }
-            // Obtain a message type
+            // Obtain a person type
             var RequestUser = root.lookupType("com.example.nettydemo.protobuf.RequestUser");
             // Exemplary payload
             var payload = data;
@@ -110,9 +110,9 @@
                 }
                 return;
             }
-            // Create a new message
+            // Create a new person
             var message = RequestUser.create(payload); // or use .fromObject if conversion is necessary
-            // Encode a message to an Uint8Array (browser) or Buffer (node)
+            // Encode a person to an Uint8Array (browser) or Buffer (node)
             var buffer = RequestUser.encode(message).finish();
             if (typeof success === "function") {
                 success(buffer)
@@ -140,7 +140,7 @@
                 }
                 return;
             }
-            // Obtain a message type
+            // Obtain a person type
             var ResponseUser = root.lookupType("com.example.nettydemo.protobuf.ResponseUser");
             var reader = new FileReader();
             reader.readAsArrayBuffer(data);
