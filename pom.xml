@@ -135,6 +135,12 @@
             <artifactId>amqp-client</artifactId>
             <version>5.4.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.bitbucket.mstrobel</groupId>
+            <artifactId>procyon-compilertools</artifactId>
+            <version>0.5.36</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

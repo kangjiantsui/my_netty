@@ -42,6 +42,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @SuppressWarnings("RedundantThrows")
 public class Demo2 {
@@ -322,9 +323,9 @@ public class Demo2 {
     @Test
     public void demo19() {
         B b = new B();
-        System.out.println(b.a);
+        System.out.println(B.a);
         D d = new D();
-        System.out.println(d.a);
+        System.out.println(B.a);
     }
 
     @Test
@@ -709,7 +710,7 @@ public class Demo2 {
         var map = new HashMap<Integer, Integer>();
         map.put(1, 2);
         map.put(2, 3);
-        boolean contains = map.keySet().contains(1);
+        boolean contains = map.containsKey(1);
         System.out.println(contains);
     }
 
@@ -733,7 +734,7 @@ public class Demo2 {
         IAP_MONTH_CHARGE_GOLDEN(12),        //黄金月卡
         IAP_MONTH_CHARGE_DIAMOND(13);
 
-        private IAPType(int type) {
+        IAPType(int type) {
             this.value = type;
         }
 
@@ -892,6 +893,21 @@ public class Demo2 {
             channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
             System.out.println(" [X] Sent '" + message + "'");
         }
+    }
+
+    @Test
+    public void demo58() {
+        int[] a = {9, 3, 4, 8, 52, 1};
+        for (int i = 0; i < a.length-1; i++) {
+            if (a[i] < a[i + 1]) {
+                int temp = a[i];
+                a[i] = a[i + 1];
+                a[i + 1] = temp;
+            }
+        }
+        Stream.of(a).forEach(System.out::print);
+        HashMap hashMap = new HashMap();
+
     }
 
 }
