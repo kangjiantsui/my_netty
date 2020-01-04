@@ -2,14 +2,19 @@ package cn.kang.my_netty;
 
 import com.google.common.eventbus.EventBus;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.ByteToMessageDecoder;
+import io.netty.handler.codec.MessageToByteEncoder;
 import org.apache.commons.codec.binary.Base64;
 import org.assertj.core.util.Lists;
 import org.json.JSONArray;
@@ -23,6 +28,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.util.SafeEncoder;
 
 import javax.xml.bind.DatatypeConverter;
+import java.beans.PropertyVetoException;
 import java.io.*;
 import java.net.URI;
 import java.net.URL;
@@ -32,9 +38,13 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -898,7 +908,7 @@ public class Demo2 {
     @Test
     public void demo58() {
         int[] a = {9, 3, 4, 8, 52, 1};
-        for (int i = 0; i < a.length-1; i++) {
+        for (int i = 0; i < a.length - 1; i++) {
             if (a[i] < a[i + 1]) {
                 int temp = a[i];
                 a[i] = a[i + 1];
@@ -906,10 +916,122 @@ public class Demo2 {
             }
         }
         Stream.of(a).forEach(System.out::print);
-        HashMap hashMap = new HashMap();
+    }
+
+    @Test
+    public void demo59() {
+        List<List> lists = new ArrayList<>();
+        lists.add(lists);
+        lists.add(lists);
+        lists.add(lists);
+        lists.add(lists);
+        lists.add(lists);
+        lists.add(lists);
+        lists.add(lists);
+        lists.add(lists);
+        System.out.println(lists);
+    }
+
+    @Test
+    public void demo60() throws JSONException {
+        com.alibaba.fastjson.JSONObject jsonObject = new com.alibaba.fastjson.JSONObject();
+        jsonObject.put("1", "2b");
+        jsonObject.put("3", "4d");
+        String str = jsonObject.toJSONString();
+        com.alibaba.fastjson.JSONObject jsonObject1 = com.alibaba.fastjson.JSONObject.parseObject(str);
+        System.out.println(jsonObject1.get("3"));
+    }
+
+    @Test
+    public void demo61() throws PropertyVetoException, SQLException {
+        ComboPooledDataSource dataSource;
+        dataSource = new ComboPooledDataSource();
+        dataSource.setDriverClass("com.mysql.jdbc.Driver");
+        dataSource.setUser("root");
+        dataSource.setPassword("UOTBsFSulTp1kCBP");
+        dataSource.setJdbcUrl("jdbc:mysql://192.168.1.242:3306/xy_kj?");
+        dataSource.setDebugUnreturnedConnectionStackTraces(true);
+        dataSource.setInitialPoolSize(16); // 初始化
+        dataSource.setMinPoolSize(16); // 连接池中保留的最小连接数
+        dataSource.setMaxPoolSize(16); // 连接池中保留的最大连接数
+        dataSource.setMaxStatements(0); // 连接池内单个连接所拥有的最大缓存statements数
+        dataSource.setMaxIdleTime(60); // 最大空闲时间,60秒内未使用则连接被丢弃
+        dataSource.setCheckoutTimeout(30 * 1000); // 获取连接超时30秒
+        dataSource.setAcquireRetryAttempts(3); // 获取连接重试次数
+        dataSource.setAcquireRetryDelay(5000); // 获取连接重试时间间隔1秒
+        dataSource.setAcquireIncrement(5); //
+        dataSource.setIdleConnectionTestPeriod(60); // 每60秒检查所有连接池中的空闲连接
+        dataSource.setNumHelperThreads(3); // 异步辅助操作现程
+        dataSource.setTestConnectionOnCheckin(true);
+        dataSource.setTestConnectionOnCheckout(false);
+
+        try ( java.sql.Connection connection = dataSource.getConnection();) {
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM tb_z_shopping_gift_template;");
+            ResultSet rs;
+            List<ShoppingGiftTemp> infos = null;
+            ShoppingGiftTemp info;
+            if (pstmt != null) {
+                infos = new ArrayList<ShoppingGiftTemp>();
+                rs = pstmt.executeQuery();
+                while (rs.next()) {
+                    info = new ShoppingGiftTemp();
+                    info.setShoppingId(rs.getInt("shoppingId"));
+                    info.setActivityUID(rs.getString("activityUID"));
+                    info.setItem1(rs.getInt("item1"));
+                    info.setCount1(rs.getInt("count1"));
+                    info.setItem2(rs.getInt("item2"));
+                    info.setCount2(rs.getInt("count2"));
+                    info.setItem3(rs.getInt("item3"));
+                    info.setCount3(rs.getInt("count3"));
+                    info.setItem4(rs.getInt("item4"));
+                    info.setCount4(rs.getInt("count4"));
+                    info.setItem5(rs.getInt("item5"));
+                    info.setCount5(rs.getInt("count5"));
+                    info.setItem6(rs.getInt("item6"));
+                    info.setCount6(rs.getInt("count6"));
+                    infos.add(info);
+                }
+            }
+            Map<Integer, Integer> items = infos.get(0).getItems();
+            System.out.println(items);
+        }
+    }
+
+    @Test
+    public void demo62() {
+        List<Integer> integers = new ArrayList<>();
+        integers.add(null);
+        long l = Objects.requireNonNull(integers.get(0)).longValue();
+        System.out.println(l);
 
     }
 
+    @Test
+    public void demo63() {
+        Map<Integer, Map<Integer, String>>  m1 = new HashMap<>();
+        Map<Integer, String>                m2 = new HashMap<>();
+        m2.put(1, "m2");
+        m1.put(1, m2);
+        String s = m1.values().stream().filter(e -> e.values().stream().filter(f -> f.equals("m2")).findFirst().get().equals("m2")).findFirst().get().values().stream().findFirst().get();
+        System.out.println(s);
+    }
+
+    @Test
+    public void demo64() throws JSONException {
+        JSONObject put = new JSONObject().put("name", "礼包名字").put("price", "4.5").put("value", "仙币价值");
+        System.out.println(put);
+    }
+
+    @Test
+    public void demo65() {
+        Set<Integer> set = new HashSet<>();
+        set.add(1);
+        set.add(2);
+        set.add(3);
+        set.stream().filter(e -> e > 3).findFirst().ifPresent(e -> {
+            System.out.println("有");
+        });
+    }
 }
 
 
